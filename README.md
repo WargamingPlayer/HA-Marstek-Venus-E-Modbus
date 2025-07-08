@@ -7,7 +7,7 @@ This version is the base version for Marstek Venus E.
 
 ## Folders:
   [root]\
-    EW11B   - Elfin EW11B.\
+    EW11B   - Elfin EW11B\
       packages - Home Assistant packages\
 
 ## More information:
