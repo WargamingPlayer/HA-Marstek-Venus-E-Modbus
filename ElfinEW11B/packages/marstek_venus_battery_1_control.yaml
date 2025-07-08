@@ -1,5 +1,5 @@
 # ----------------------
-# Version: 0.0.2
+# Version: 0.0.3
 # By: WargamingPlayer
 # Fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
 # ----------------------  
@@ -26,16 +26,6 @@ modbus:
         data_type: custom
         count: 10
         structure: ">20s"
-
-      # - name: "Marstek 1 Serial"
-      #   unique_id: marstek_1_serial
-      #   address: 31200
-      #   slave: 1
-      #   scan_interval: 300
-      #  input_type: holding
-      # data_type: custom
-      # count: 10
-      # structure: ">20s"
 
       - name: "Marstek 1 Battery Voltage"
         unique_id: marstek_1_battery_voltage
@@ -194,7 +184,7 @@ modbus:
         unique_id: marstek_1_ac_offgrid_power
         address: 32302
         slave: 1
-        scan_interval: 10
+        scan_interval: 30
         input_type: holding
         data_type: int32
         unit_of_measurement: W
@@ -203,90 +193,6 @@ modbus:
         scale: 1
         offset: 0
         precision: 0
-
-      #- name: "Marstek 1 Total Charging Energy"
-      #  unique_id: marstek_1_total_charging_energy
-      #  address: 33000
-      #  slave: 1
-      #  scan_interval: 30
-      #  input_type: holding
-      #  data_type: uint32
-      #  unit_of_measurement: kWh
-      #  device_class: energy
-      #  state_class: measurement
-      #  scale: 1
-      #  offset: 0
-      #  precision: 0
-
-      #- name: "Marstek 1 Total Discharging Energy"
-      #  unique_id: marstek_1_total_discharging_energy
-      #  address: 33002
-      #  slave: 1
-      #  scan_interval: 30
-      #  input_type: holding
-      #  data_type: uint32
-      #  unit_of_measurement: kWh
-      #  device_class: energy
-      #  state_class: measurement
-      #  scale: 1
-      #  offset: 0
-      #  precision: 0
-
-      #- name: "Marstek 1 Daily Charging Energy"
-      #  unique_id: marstek_1_daily_charging_energy
-      #  address: 33004
-      #  slave: 1
-      #  scan_interval: 30
-      #  input_type: holding
-      #  data_type: uint32
-      #  unit_of_measurement: kWh
-      #  device_class: energy
-      #  state_class: measurement
-      #  scale: 1
-      #  offset: 0
-      #  precision: 0
-
-      #- name: "Marstek 1 Daily Discharging Energy"
-      #  unique_id: marstek_1_daily_discharging_energy
-      #  address: 33006
-      #  slave: 1
-      #  scan_interval: 30
-      #  input_type: holding
-      #  data_type: uint32
-      #  unit_of_measurement: kWh
-      #  device_class: energy
-      #  state_class: measurement
-      #  scale: 1
-      #  offset: 0
-      #  precision: 0
-
-      #- name: "Marstek 1 Monthly Charging Energy"
-      #  unique_id: marstek_1_monthly_charging_energy
-      #  address: 33008
-      #  slave: 1
-      #  scan_interval: 30
-      #  input_type: holding
-      #  data_type: uint32
-      #  unit_of_measurement: kWh
-      #  device_class: energy
-      #  state_class: measurement
-      #  scale: 1
-      #  offset: 0
-      #  precision: 0
-
-      #- name: "Marstek 1 Monthly Discharging Energy"
-      #  unique_id: marstek_1_monthly_discharging_energy
-      #  address: 33010
-      #  slave: 1
-      #  scan_interval: 30
-      #  input_type: holding
-      #  data_type: uint32
-      #  unit_of_measurement: kWh
-      #  device_class: energy
-      #  state_class: measurement
-      #  scale: 1
-      #  offset: 0
-      #  precision: 0
 
       - name: "Marstek 1 Internal Temperature"
         unique_id: marstek_1_internal_temperature
@@ -306,7 +212,7 @@ modbus:
         unique_id: marstek_1_internal_mos1_temperature
         address: 35001
         slave: 1
-        scan_interval: 30
+        scan_interval: 600
         input_type: holding
         data_type: int16
         unit_of_measurement: °C
@@ -320,7 +226,7 @@ modbus:
         unique_id: marstek_1_internal_mos2_temperature
         address: 35002
         slave: 1
-        scan_interval: 30
+        scan_interval: 600
         input_type: holding
         data_type: int16
         unit_of_measurement: °C
@@ -379,7 +285,7 @@ modbus:
         data_type: custom
         count: 3
         structure: ">3H"
-        scan_interval: 30
+        scan_interval: 90
 
       - name: "Marstek 1 RS485 Control Mode"
         unique_id: marstek_1_rs485_control_mode
@@ -440,6 +346,7 @@ modbus:
         unique_id: marstek_1_user_work_mode
         address: 43000
         slave: 1
+        scan_interval: 10
         input_type: holding
         data_type: uint16
         unit_of_measurement: ""
@@ -476,31 +383,6 @@ modbus:
         data_type: custom
         count: 4
         structure: ">4H"
-
-    # switches:
-    #   - name: "Marstek 1 Enable RS485 Control Mode"
-    #     unique_id: marstek_1_enable_rs485_control_mode
-    #     address: 42000
-    #     slave: 1
-    #     command_on: 21930 # 0x55AA in decimal
-    #     command_off: 21947 # 0x55BB in decimal
-    #     write_type: holding
-
-    #   - name: "Marstek 1 Force Charge Mode"
-    #     unique_id: marstek_1_force_charge_mode
-    #     address: 42010
-    #     slave: 1
-    #     command_on: 1 # Charge mode
-    #     command_off: 0 # Stop mode
-    #     write_type: holding
-
-    #   - name: "Marstek 1 Force Discharge Mode"
-    #     unique_id: marstek_1_force_discharge_mode
-    #     address: 42010
-    #     slave: 1
-    #     command_on: 2 # Discharge mode
-    #     command_off: 0 # Stop mode
-    #     write_type: holding
 
 # ------------
 # INPUT NUMBER
@@ -546,46 +428,6 @@ input_number:
     unit_of_measurement: "%"
     mode: box
 
-# # charge power
-# action: modbus.write_register
-# data:
-#   hub: MarstekVenus1
-#   address: 42020
-#   slave: 1
-#   value: 200
-
-# # discharge power
-# action: modbus.write_register
-# data:
-#   hub: MarstekVenus1
-#   address: 42021
-#   slave: 1
-#   value: 200
-
-# # force discharge
-# action: modbus.write_register
-# data:
-#   hub: MarstekVenus1
-#   address: 42010
-#   slave: 1
-#   value: 2
-
-# # force charge
-# action: modbus.write_register
-# data:
-#   hub: MarstekVenus1
-#   address: 42010
-#   slave: 1
-#   value: 1
-
-# # stop forcible discharge
-# action: modbus.write_register
-# data:
-#   hub: MarstekVenus1
-#   address: 42010
-#   slave: 1
-#   value: 0
-
 # ------------
 # INPUT SELECT
 # ------------
@@ -595,8 +437,7 @@ input_select:
     options:
       - "Manual"
       - "Anti-Feed"
-      - "Trade Mode"
-    initial: "Manual"
+      - "Trade"
 
 # -------
 # SCRIPTS
@@ -703,7 +544,7 @@ automation:
                     {% elif states('sensor.marstek_1_user_work_mode') | int == 1 %}
                       Anti-Feed
                     {% elif states('sensor.marstek_1_user_work_mode') | int == 2 %}
-                      Trade Mode
+                      Trade
                     {% else %}
                       Manual
                     {% endif %}
@@ -728,7 +569,7 @@ automation:
                     'Anti-Feed') %}
                       1
                     {% elif is_state('input_select.marstek_1_user_work_mode_input_select',
-                    'Trade Mode') %}
+                    'Trade') %}
                       2
                     {% else %}
                       0
@@ -960,6 +801,15 @@ template:
             4:'Backup mode',
             5:'OTA upgrade' } %}
           {{ mapping[states('sensor.marstek_1_inverter_state') | int] }}
+
+      - name: "Marstek 1 Operational mode"
+        unique_id: marstek_1_operational mode
+        state: >
+          {% set mapping = {
+            0:'Manual',
+            1:'Anti-Feed',
+            2:'Trade' } %}
+          {{ mapping[states('sensor.marstek_1_user_work_mode') | int] }}
 
       # marstek_1_alarm_state
       # reg 0 bit 0 PLL Abnormal Restart

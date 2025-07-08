@@ -12,7 +12,6 @@ This version is the base version for Marstek Venus E.
 
 ## More information:
 More information: https://gathering.tweakers.net/forum/list_messages/2282240  
-Modbus documentation: https://duravolt.nl/wp-co...lug-in-Battery-Modbus.pdf  
 
 ## Disclaimer:
   The Home Assistant files from the packages folder is based on from @github/Superduper1969  
