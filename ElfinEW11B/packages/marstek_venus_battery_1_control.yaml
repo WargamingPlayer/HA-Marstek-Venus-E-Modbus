@@ -398,17 +398,17 @@ input_number:
 
   marstek_1_set_max_discharging_power:
     name: "Marstek 1 Set Maximum discharging power"
-    min: 50
+    min: 0
     max: 2500
-    step: 10
+    step: 1
     unit_of_measurement: W
     mode: box
 
   marstek_1_set_max_charging_power:
     name: "Marstek 1 Set Maximum charging power"
-    min: 50
+    min: 300
     max: 2500
-    step: 50
+    step: 1
     unit_of_measurement: W
     mode: box
 
@@ -799,7 +799,8 @@ template:
             2:'Charge',
             3:'Discharge',
             4:'Backup mode',
-            5:'OTA upgrade' } %}
+            5:'OTA upgrade',
+            6:'Bypass' } %}
           {{ mapping[states('sensor.marstek_1_inverter_state') | int] }}
 
       - name: "Marstek 1 Operational mode"
