@@ -769,7 +769,7 @@ automation:
                   value: "{{ states('input_number.marstek_1_set_max_charging_power') | int | abs }}"
 
   - id: marstek_1_sync_modbus_and_max_discharge
-    alias: "Marstek 1 Sync Modbus and Maximum Didcharge"
+    alias: "Marstek 1 Sync Modbus and Maximum Discharge"
     description: "sync modbus sensor with maximum discharge"
     mode: single
     triggers:
