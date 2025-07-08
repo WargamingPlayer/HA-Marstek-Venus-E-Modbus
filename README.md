@@ -1,20 +1,29 @@
 # HA Marstek Venus E Modbus
-Home Assistant Modbus Interface for Marstek Venus E
+Home Assistant Modbus Interface for Marstek Venus E 
+
+## Version information
 Version 0.01
 This version is the base version for Marstek Venus E.
 
-Folders:
-EW11B   - Elfin EW11B
-  packages - Home Assistant packages
+## Folders:
+  [root]\
+    EW11B   - Elfin EW11B.\
+      packages - Home Assistant packages\
 
-More information: https://gathering.tweakers.net/forum/list_messages/2282240
-Modbus documentation: https://duravolt.nl/wp-co...lug-in-Battery-Modbus.pdf
+## More information:
+More information: https://gathering.tweakers.net/forum/list_messages/2282240\
+Modbus documentation: https://duravolt.nl/wp-co...lug-in-Battery-Modbus.pdf\
+
+## Disclaimer:
+  The Home Assistant files from the packages folder is based on from @github/Superduper1969.\
+  https://github.com/Superduper1969/MarstekVenus-ElfinEW11\
 
 
-Elfin EW11B:
-    https://nl.aliexpress.com/item/32916128353.html
-    Note: Use the Wide range Voltage version.
-
+# Installation: 
+  ## Elfin EW11B:
+    https://nl.aliexpress.com/item/32916128353.html\
+    Note: Use the Wide range Voltage version.\
+  
     Serial Port parameters on Elfin EW11B:
         Baud Rate = 115200
         Data Bit = 8
@@ -35,12 +44,7 @@ Elfin EW11B:
         Security = Disable
         Route = Uart
 
-
-Disclaimer:
-    The Home Assistant files from the packages folder is based on from Superduper1969:
-    https://github.com/Superduper1969/MarstekVenus-ElfinEW11
-
-Installation of Elfin EW11B packages for Home Assistant:
+  ## Installation of Elfin EW11B packages for Home Assistant:
     1.  Create the connector for your Marstek Venus E.
         Note: Beware of the Wiring schema.
     2.  Connect the Elfin to the Marstek Venus E Modbus connector, it will power up.
@@ -61,13 +65,12 @@ Installation of Elfin EW11B packages for Home Assistant:
     13. Update the yaml file(s) by editing the IP addresses (see below).
     14. Restart HA.
 
-
-Configure the yaml files:
+  ## Configure the yaml files:
     1.  Open the file in Home Assistant with file editor.
     2.  Find [YourIPGoesHere] in the top of the file.
     3.  Replace it with the IP address of the Elfin.
 
-Help I have 3 or more Marsteks:
+  ## Help I have 3 or more Marsteks:
     1.  Make a copy of the file marstek_venus_battery_1_control.yaml
     2.  Rename the copy to marstek_venus_battery_n_control.yaml where n= The Marstek you want to add (3, 4, 5)
     3.  Open the new file in an editor.
