@@ -1,8 +1,8 @@
 # ----------------------
-# Version: 0.0.3
+# Version: 0.0.4
 # By: WargamingPlayer
 # Fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
-# ----------------------  
+# ----------------------
 
 # ------
 # MODBUS
@@ -398,17 +398,17 @@ input_number:
 
   marstek_1_set_max_discharging_power:
     name: "Marstek 1 Set Maximum discharging power"
-    min: 0
+    min: 50
     max: 2500
-    step: 1
+    step: 10
     unit_of_measurement: W
     mode: box
 
   marstek_1_set_max_charging_power:
     name: "Marstek 1 Set Maximum charging power"
-    min: 300
+    min: 50
     max: 2500
-    step: 1
+    step: 50
     unit_of_measurement: W
     mode: box
 
@@ -799,8 +799,7 @@ template:
             2:'Charge',
             3:'Discharge',
             4:'Backup mode',
-            5:'OTA upgrade',
-            6:'Bypass' } %}
+            5:'OTA upgrade' } %}
           {{ mapping[states('sensor.marstek_1_inverter_state') | int] }}
 
       - name: "Marstek 1 Operational mode"
