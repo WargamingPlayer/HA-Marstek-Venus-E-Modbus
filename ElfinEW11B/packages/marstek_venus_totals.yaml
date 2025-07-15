@@ -1,0 +1,163 @@
+# ----------------------
+# Version: 0.0.4
+# By: WargamingPlayer
+# Fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
+# ----------------------
+
+# ----------------
+# TEMPLATE SENSORS
+# ----------------
+template:
+  - sensor:
+      - name: "Marstek Charging in W"
+        unique_id: marstek_charging_in_w
+        unit_of_measurement: W
+        device_class: power
+        state_class: measurement
+        state: >
+          {%- set ch1=0 | int %}
+          {%- set ch2=0 | int %}
+          {%- set ch3=0 | int %}
+          {%- if has_value('sensor.marstek_1_charging_in_w') %}
+          {%- set ch1= states('sensor.marstek_1_charging_in_w') | int %}
+          {%- endif %}
+          {%- if has_value('sensor.marstek_2_charging_in_w') %}
+          {%- set ch2= states('sensor.marstek_2_charging_in_w') | int %}
+          {%- endif %}
+          {%- if has_value('sensor.marstek_3_charging_in_w') %}
+          {%- set ch3= states('sensor.marstek_3_charging_in_w') | int %}
+          {%- endif %}
+          {{ (ch1 + ch2 + ch3) | int }}
+
+  - sensor:
+      - name: "Marstek Discharging in W"
+        unique_id: marstek_discharging_in_w
+        unit_of_measurement: W
+        device_class: power
+        state_class: measurement
+        state: >
+          {%- set ch1=0 | int %}
+          {%- set ch2=0 | int %}
+          {%- set ch3=0 | int %}
+          {%- if has_value('sensor.marstek_1_discharging_in_w') %}
+          {%- set ch1= states('sensor.marstek_1_discharging_in_w') | int %}
+          {%- endif %}
+          {%- if has_value('sensor.marstek_2_discharging_in_w') %}
+          {%- set ch2= states('sensor.marstek_2_discharging_in_w') | int %}
+          {%- endif %}
+          {%- if has_value('sensor.marstek_3_discharging_in_w') %}
+          {%- set ch3= states('sensor.marstek_3_discharging_in_w') | int %}
+          {%- endif %}
+          {{ (ch1 + ch2 + ch3) | int }}
+
+  - sensor:
+      - name: "Marstek Batteries Energy"
+        unique_id: marstek_batteries_energy
+        unit_of_measurement: Wh
+        device_class: power
+        state_class: measurement
+        state: >
+          {%- set cap1=0 | int %}
+          {%- set cap2=0 | int %}
+          {%- set cap3=0 | int %}
+          {%- if has_value('sensor.marstek_1_battery_energy') %}
+          {%- set cap1= states('sensor.marstek_1_battery_energy') | int * 1024 |  int %}
+          {%- endif %}
+          {%- if has_value('sensor.marstek_2_battery_energy') %}
+          {%- set cap2= states('sensor.marstek_2_battery_energy') | int * 1024 |  int %}
+          {%- endif %}
+          {%- if has_value('sensor.marstek_3_battery_energy') %}
+          {%- set cap2= states('sensor.marstek_3_battery_energy') | int * 1024 |  int %}
+          {%- endif %}
+          {{ cap1 + cap2 + cap3 | int }}
+
+  - sensor:
+      - name: "Marstek Batteries Charge"
+        unique_id: marstek_batteries_charge
+        unit_of_measurement: Wh
+        device_class: power
+        state_class: measurement
+        state: >
+          {%- set soc1=0 | int %}
+          {%- set soc2=0 | int %}
+          {%- set soc3=0 | int %}
+          {%- set cap1=0 | int %}
+          {%- set cap2=0 | int %}
+          {%- set cap3=0 | int %}
+          {%- if has_value('sensor.marstek_1_battery_soc') %}
+          {%- set soc1= states('sensor.marstek_1_battery_soc') | float %}
+          {%- endif %}
+          {%- if has_value('sensor.marstek_2_battery_soc') %}
+          {%- set soc2= states('sensor.marstek_2_battery_soc') | float %}
+          {%- endif %}
+          {%- if has_value('sensor.marstek_3_battery_soc') %}
+          {%- set soc3= states('sensor.marstek_3_battery_soc') | float %}
+          {%- endif %}
+          {%- if has_value('sensor.marstek_1_battery_energy') %}
+          {%- set cap1= states('sensor.marstek_1_battery_energy') | int * 1024 |  int %}
+          {%- endif %}
+          {%- if has_value('sensor.marstek_2_battery_energy') %}
+          {%- set cap2= states('sensor.marstek_2_battery_energy') | int * 1024 |  int %}
+          {%- endif %}
+          {%- if has_value('sensor.marstek_3_battery_energy') %}
+          {%- set cap2= states('sensor.marstek_3_battery_energy') | int * 1024 |  int %}
+          {%- endif %}
+          {%- set totalcap= cap1 + cap2 + cap3 | int %}
+          {%- set total1= (cap1 * (soc1 | float / 100) | float ) | float %}
+          {%- set total2= (cap2 * (soc2 | float / 100) | float ) | float %}
+          {%- set total3= (cap3 * (soc3 | float / 100) | float ) | float %}
+          {%- set total= total1 + total2 + total3 | float %}
+          {{ total | round(1) }}
+
+  - sensor:
+      - name: "Marstek Batteries SOC"
+        unique_id: marstek_batteries_soc
+        unit_of_measurement: "%"
+        state_class: measurement
+        state: >
+          {%- set totalcap=0 | float %}
+          {%- set charge=0 | float %}
+          {%- if has_value('sensor.marstek_batteries_energy') %}
+          {%- set totalcap= states('sensor.marstek_batteries_energy') | float %}
+          {%- endif %}
+          {%- if has_value('sensor.marstek_batteries_charge') %}
+          {%- set charge= states('sensor.marstek_batteries_charge') | float %}
+          {%- endif %}
+          {{ (((charge / totalcap | float) | float) * 100) | round(1) }}
+
+# -------
+# SENSORS
+# -------
+sensor:
+  - platform: integration
+    name: Marstek Discharging in kWh
+    unique_id: marstek_discharging_in_kwh
+    source: sensor.marstek_discharging_in_w
+    round: 2
+    unit_prefix: k
+    unit_time: h
+    method: left
+  - platform: integration
+    name: Marstek Charging in kWh
+    unique_id: marstek_charging_in_kwh
+    source: sensor.marstek_charging_in_w
+    round: 2
+    unit_prefix: k
+    unit_time: h
+    method: left
+
+# --------------
+# UTILITY METERS
+# --------------
+utility_meter:
+  marstek_daily_discharge:
+    name: Marstek Daily Discharging in kWh
+    unique_id: marstek_daily_discharging_in_kwh
+    source: sensor.marstek_discharging_in_kwh
+    cycle: daily
+
+  marstek_daily_charge:
+    name: Marstek Daily Charging in kWh
+    unique_id: marstek_daily_charging_in_kwh
+    source: sensor.marstek_charging_in_kwh
+    cycle: daily
