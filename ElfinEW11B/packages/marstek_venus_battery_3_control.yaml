@@ -1,5 +1,5 @@
 # ----------------------
-# Version: 0.0.4
+# Version: 0.0.5
 # By: WargamingPlayer
 # Fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
 # ----------------------
@@ -26,6 +26,71 @@ modbus:
         data_type: custom
         count: 10
         structure: ">20s"
+
+      - name: "Marstek 3 WiFi SSID"
+        unique_id: marstek_3_wifi_ssid
+        address: 41500
+        slave: 1
+        scan_interval: 300
+        input_type: holding
+        data_type: custom
+        count: 16
+        structure: ">32s"
+
+      - name: "Marstek 3 MAC"
+        unique_id: marstek_3_mac
+        address: 30402
+        slave: 1
+        scan_interval: 300
+        input_type: holding
+        data_type: custom
+        count: 6
+        structure: ">2c2c2c2c2c2c"
+      #        structure: ">12c"
+
+      - name: "Marstek 3 WiFi Status"
+        unique_id: marstek_3_wifi_status
+        address: 30300
+        slave: 1
+        scan_interval: 30
+        input_type: holding
+        data_type: uint16
+        unit_of_measurement: ""
+        state_class: measurement
+
+      - name: "Marstek 3 BT Status"
+        unique_id: marstek_3_bt_status
+        address: 30301
+        slave: 1
+        scan_interval: 30
+        input_type: holding
+        data_type: uint16
+        unit_of_measurement: ""
+        state_class: measurement
+
+      - name: "Marstek 3 Cloud Status"
+        unique_id: marstek_3_cloud_status
+        address: 30302
+        slave: 1
+        scan_interval: 30
+        input_type: holding
+        data_type: uint16
+        unit_of_measurement: ""
+        state_class: measurement
+
+      - name: "Marstek 3 WiFi Signal strength"
+        unique_id: marstek_3_wifi_signal_strength
+        address: 30303
+        slave: 1
+        scan_interval: 10
+        input_type: holding
+        data_type: uint16
+        unit_of_measurement: dBm
+        device_class: signal_strength
+        state_class: measurement
+        scale: 1
+        offset: 0
+        precision: 0
 
       - name: "Marstek 3 Battery Voltage"
         unique_id: marstek_3_battery_voltage
@@ -77,6 +142,7 @@ modbus:
         input_type: holding
         data_type: uint16
         unit_of_measurement: "%"
+        device_class: battery
         state_class: measurement
         scale: 1
         offset: 0
@@ -162,7 +228,7 @@ modbus:
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
-        scale: 0.01
+        scale: 0.1
         offset: 0
         precision: 1
 
@@ -287,6 +353,32 @@ modbus:
         structure: ">3H"
         scan_interval: 90
 
+      - name: "Marstek 3 Battery Maximum Cell Voltage"
+        unique_id: marstek_3_battery_maximum_cell_voltage
+        address: 37007
+        slave: 1
+        scan_interval: 10
+        input_type: holding
+        data_type: uint16
+        unit_of_measurement: "V"
+        state_class: measurement
+        scale: 0.001
+        offset: 0
+        precision: 3
+
+      - name: "Marstek 3 Battery Minimum Cell Voltage"
+        unique_id: marstek_3_battery_minimum_cell_voltage
+        address: 37008
+        slave: 1
+        scan_interval: 10
+        input_type: holding
+        data_type: uint16
+        unit_of_measurement: "V"
+        state_class: measurement
+        scale: 0.001
+        offset: 0
+        precision: 3
+
       - name: "Marstek 3 RS485 Control Mode"
         unique_id: marstek_3_rs485_control_mode
         address: 42000
@@ -345,8 +437,8 @@ modbus:
       - name: "Marstek 3 User Work Mode"
         unique_id: marstek_3_user_work_mode
         address: 43000
-        scan_interval: 10
         slave: 1
+        scan_interval: 10
         input_type: holding
         data_type: uint16
         unit_of_measurement: ""
@@ -384,6 +476,35 @@ modbus:
         count: 4
         structure: ">4H"
 
+    switches:
+      - name: "Marstek 3 Power Restriction (800W)"
+        unique_id: marstek_3_power_restriction
+        slave: 1
+        address: 41010
+        command_on: 1
+        command_off: 0
+        write_type: holding
+        verify:
+          address: 41010
+          delay: 30
+          input_type: holding
+          state_on: 1
+          state_off: 0
+
+      - name: "Marstek 3 Backup Enabled"
+        unique_id: marstek_3_backup_enabled
+        slave: 1
+        address: 41200
+        command_on: 0
+        command_off: 1
+        write_type: holding
+        verify:
+          address: 41200
+          delay: 10
+          input_type: holding
+          state_on: 0
+          state_off: 1
+
 # ------------
 # INPUT NUMBER
 # ------------
@@ -397,7 +518,7 @@ input_number:
     mode: slider
 
   marstek_3_set_max_discharging_power:
-    name: "Marstek 3 Set maximum discharging power"
+    name: "Marstek 3 Set Maximum discharging power"
     min: 50
     max: 2500
     step: 10
@@ -405,7 +526,7 @@ input_number:
     mode: box
 
   marstek_3_set_max_charging_power:
-    name: "Marstek 3 Set maximum charging power"
+    name: "Marstek 3 Set Maximum charging power"
     min: 50
     max: 2500
     step: 50
@@ -730,7 +851,7 @@ automation:
               - action: modbus.write_register
                 metadata: {}
                 data:
-                  hub: MarstekVenus1
+                  hub: MarstekVenus3
                   slave: 1
                   address: 44000
                   value: "{{ ((( states('input_number.marstek_3_set_battery_max_soc') | int ) | float ) * 10 ) | int | abs }}"
@@ -983,6 +1104,14 @@ template:
         state_class: measurement
         state: >
           {{ states('sensor.marstek_3_capacity_and_power_registers').split(',')[3] | int(1) }}
+
+      - name: "Marstek 3 Battery Cell Voltage Delta"
+        unique_id: marstek_3_battery_cell_voltage_delta
+        unit_of_measurement: "V"
+        device_class: voltage
+        state_class: measurement
+        state: >
+          {{ ((states('sensor.marstek_3_battery_maximum_cell_voltage') | round(3) | float) - (states('sensor.marstek_3_battery_minimum_cell_voltage') | round(3) | float)) | round(3) | float }}
 
 #---------
 # SWITCHES
