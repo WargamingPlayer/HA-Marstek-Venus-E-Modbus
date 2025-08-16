@@ -1,5 +1,6 @@
 # ----------------------
-# Version: 0.0.5
+# Version: 2015.8.1
+# Note: Only for Marstek EMS 153 or higher
 # By: WargamingPlayer
 # Fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
 # ----------------------
@@ -17,6 +18,97 @@ modbus:
     timeout: 5
 
     sensors:
+# 30000
+# 30001 = 32100
+# 30002 = 32101
+# 30003 
+# 30004 = 32200
+# 30005 = 32100
+# 30006 = 32300
+# 30007
+# 30008 = 35001
+# 30009 = 35002
+# 30010 = 35000
+# 30100 = 36100
+# 30200
+
+      - name: "Marstek 2 WiFi Status"
+        unique_id: marstek_2_wifi_status
+        address: 30300
+        slave: 1
+        scan_interval: 30
+        input_type: holding
+        data_type: uint16
+        state_class: measurement
+        # 0 = Disconnected
+        # 1 = Connected
+
+      - name: "Marstek 2 BT Status"
+        unique_id: marstek_2_bt_status
+        address: 30301
+        slave: 1
+        scan_interval: 30
+        input_type: holding
+        data_type: uint16
+        state_class: measurement
+        # 0 = Disconnected
+        # 1 = Connected after reboot
+        # 2 = Connected
+        # 3 = Active
+
+      - name: "Marstek 2 Cloud Status"
+        unique_id: marstek_2_cloud_status
+        address: 30302
+        slave: 1
+        scan_interval: 30
+        input_type: holding
+        data_type: uint16
+        state_class: measurement
+        # 0 = Disconnected
+        # 1 = Connected
+
+      - name: "Marstek 2 WiFi Signal strength"
+        unique_id: marstek_2_wifi_signal_strength
+        address: 30303
+        slave: 1
+        scan_interval: 10
+        input_type: holding
+        data_type: int16
+        unit_of_measurement: dBm
+        device_class: signal_strength
+        state_class: measurement
+        scale: -1
+        offset: 0
+        precision: 0
+
+# 30399 = 31102 (in hex)
+# 30400 = 31100 (in hex)
+# 30401 = 31101 (in hex)
+
+      - name: "Marstek 2 MAC"
+        unique_id: marstek_2_mac
+        address: 30402
+        slave: 1
+        scan_interval: 300
+        input_type: holding
+        data_type: custom
+        count: 6
+        structure: ">12s"
+
+# 30500
+# 30600
+# 30700
+
+      - name: "Marstek 2 COM Module version"
+        unique_id: marstek_2_com_module_version
+        address: 30800
+        slave: 1
+        scan_interval: 300
+        input_type: holding
+        data_type: custom
+        count: 6
+        structure: ">12s"
+
       - name: "Marstek 2 Name"
         unique_id: marstek_2_name
         address: 31000
@@ -27,70 +119,40 @@ modbus:
         count: 10
         structure: ">20s"
 
-      - name: "Marstek 2 WiFi SSID"
-        unique_id: marstek_2_wifi_ssid
-        address: 41500
+      - name: "Marstek 2 Software version"
+        unique_id: marstek_2_software_version
+        address: 31100
         slave: 1
         scan_interval: 300
         input_type: holding
-        data_type: custom
-        count: 16
-        structure: ">32s"
+        data_type: uint16
+        scale: 0.1
+        offset: 0
+        precision: 1
 
-      - name: "Marstek 2 MAC"
-        unique_id: marstek_2_mac
-        address: 30402
+      - name: "Marstek 2 EMS version"
+        unique_id: marstek_2_ems_version
+        address: 31101
         slave: 1
         scan_interval: 300
         input_type: holding
-        data_type: custom
-        count: 6
-        structure: ">2c2c2c2c2c2c"
-      #        structure: ">12c"
-
-      - name: "Marstek 2 WiFi Status"
-        unique_id: marstek_2_wifi_status
-        address: 30300
-        slave: 1
-        scan_interval: 30
-        input_type: holding
         data_type: uint16
-        unit_of_measurement: ""
-        state_class: measurement
-
-      - name: "Marstek 2 BT Status"
-        unique_id: marstek_2_bt_status
-        address: 30301
-        slave: 1
-        scan_interval: 30
-        input_type: holding
-        data_type: uint16
-        unit_of_measurement: ""
-        state_class: measurement
-
-      - name: "Marstek 2 Cloud Status"
-        unique_id: marstek_2_cloud_status
-        address: 30302
-        slave: 1
-        scan_interval: 30
-        input_type: holding
-        data_type: uint16
-        unit_of_measurement: ""
-        state_class: measurement
-
-      - name: "Marstek 2 WiFi Signal strength"
-        unique_id: marstek_2_wifi_signal_strength
-        address: 30303
-        slave: 1
-        scan_interval: 10
-        input_type: holding
-        data_type: uint16
-        unit_of_measurement: dBm
-        device_class: signal_strength
-        state_class: measurement
         scale: 1
         offset: 0
         precision: 0
+     
+      - name: "Marstek 2 BMS version"
+        unique_id: marstek_2_bms_version
+        address: 31102
+        slave: 1
+        scan_interval: 300
+        input_type: holding
+        data_type: uint16
+        scale: 1
+        offset: 0
+        precision: 0        
+
+# 31200 SN but is empty
 
       - name: "Marstek 2 Battery Voltage"
         unique_id: marstek_2_battery_voltage
@@ -204,19 +266,19 @@ modbus:
         offset: 0
         precision: 0
 
-      #    - name: "Marstek 2 AC Frequency"
-      #      unique_id: marstek_2_ac_frequency
-      #      address: 32204
-      #      slave: 1
-      #      scan_interval: 30
-      #      input_type: holding
-      #      data_type: uint16
-      #      unit_of_measurement: Hz
-      #      device_class: frequency
-      #      state_class: measurement
-      #      scale: 0.01
-      #      offset: 0
-      #      precision: 2
+      - name: "Marstek 2 AC Frequency"
+        unique_id: marstek_2_ac_frequency
+        address: 32204
+        slave: 1
+        scan_interval: 30
+        input_type: holding
+        data_type: uint16
+        unit_of_measurement: Hz
+        device_class: frequency
+        state_class: measurement
+        scale: 0.01
+        offset: 0
+        precision: 2
 
       - name: "Marstek 2 AC Offgrid Voltage"
         unique_id: marstek_2_ac_offgrid_voltage
@@ -259,6 +321,13 @@ modbus:
         scale: 1
         offset: 0
         precision: 0
+
+# 33000 Not implemented, Total Charging Energy, uint32, 0.01kWh
+# 33002 Not implemented, Total Discharing Energy, uint32, 0.01kWh
+# 33004 Not implemented, Daily Charging Energy, uint32, 0.01kWh
+# 33006 Not implemented, Daily Discharging Energy, uint32, 0.01kWh
+# 33008 Not implemented, Daily Charging Energy, uint32, 0.01kWh
+# 33010 Not implemented, Daily Discharging Energy, uint32, 0.01kWh
 
       - name: "Marstek 2 Internal Temperature"
         unique_id: marstek_2_internal_temperature
@@ -315,6 +384,7 @@ modbus:
         scale: 0.1
         offset: 0
         precision: 1
+        # BMS v213 it is suddenly scale 1, BMS v215 it is scale 0.1 again
 
       - name: "Marstek 2 Min Cell Temperature"
         unique_id: marstek_2_min_cell_temperature
@@ -329,6 +399,7 @@ modbus:
         scale: 0.1
         offset: 0
         precision: 1
+        # BMS v213 it is suddenly scale 1, BMS v215 it is scale 0.1 again
 
       - name: "Marstek 2 Inverter State"
         unique_id: marstek_2_inverter_state
@@ -337,8 +408,14 @@ modbus:
         scan_interval: 5
         input_type: holding
         data_type: uint16
-        unit_of_measurement: ""
-        state_class: measurement
+        state_class: measurement        
+        # 0 Sleep
+        # 1 Stand-By
+        # 2 Charge
+        # 3 Discharge
+        # 4 Backup/Mode or Fault
+        # 5 OTA Upgrade
+        # 6 Bypass
 
       # Read 3 at once
       # 35010, unit16, "Marstek 2 Battery Charge Voltage Limit", 0.1, V
@@ -352,6 +429,36 @@ modbus:
         count: 3
         structure: ">3H"
         scan_interval: 90
+
+      # Possible not correct. Implemented on best effort
+      - name: "Marstek 2 Alarm State"
+        unique_id: marstek_2_alarm_state
+        address: 36000
+        scan_interval: 60
+        slave: 1
+        input_type: holding
+        data_type: custom
+        count: 2
+        structure: ">2H"
+
+      - name: "Marstek 2 Fault State"
+        unique_id: marstek_2_fault_state
+        address: 36100
+        scan_interval: 60
+        slave: 1
+        input_type: holding
+        data_type: custom
+        count: 4
+        structure: ">4H"
+
+# 36104 Absent???
+# 37000 always 1
+# 37001 always 0
+# 37002 always 0
+# 37003 always 0
+# 37004 = 32202
+# 37005 = 32104
+# 37006 = 35010 = 35011
 
       - name: "Marstek 2 Battery Maximum Cell Voltage"
         unique_id: marstek_2_battery_maximum_cell_voltage
@@ -379,16 +486,54 @@ modbus:
         offset: 0
         precision: 3
 
+# 37009 llways 0
+# 37010 load balancer ???
+# 37011 mmmqt and 37012= 1 when balancing? maybe trade mode??
+# 37013 8 bytes = 36100
+
+# 41000 = Device restart, we do not implement, write 0x55AA = restart
+# 41001 = Factory reset, we do not implement, write 0x55AA = reset
+
+      - name: "Marstek 2 Power Limit 800W"
+        unique_id: marstek_2_power_limit_800w
+        slave: 1
+        address: 41010
+        input_type: holding
+        data_type: uint16
+        scan_interval: 60
+        scale: 1
+        offset: 0
+        precision: 0
+        # Not implemented, only read
+
+
+# 41100 = Modbus address, always 1, we do nothing with this
+# 41200 = Backup function, see switches, we implemented it
+
+      - name: "Marstek 2 WiFi SSID"
+        unique_id: marstek_2_wifi_ssid
+        address: 41500
+        slave: 1
+        scan_interval: 300
+        input_type: holding
+        data_type: custom
+        count: 16
+        structure: ">32s"
+
+# 41516 Last 2 chars of Wifi Password, we do not implement
+
       - name: "Marstek 2 RS485 Control Mode"
         unique_id: marstek_2_rs485_control_mode
         address: 42000
         slave: 1
         input_type: holding
         data_type: uint16
-        unit_of_measurement: ""
         scale: 1
         offset: 0
         precision: 0
+        # Registers 42000 - 42999 only work when this is set.
+        # 0x55AA = Enable
+        # 0x55BB = Disable
 
       - name: "Marstek 2 Force Charge/Discharge Mode"
         unique_id: marstek_2_force_charge_discharge_mode
@@ -396,10 +541,17 @@ modbus:
         slave: 1
         input_type: holding
         data_type: uint16
-        unit_of_measurement: ""
         scale: 1
         offset: 0
         precision: 0
+        # 0 stop
+        # 1 Forces to charge according to 42020 value
+        # 2 Forces to discharge according to 42021 value
+        # Works as follow:
+        # - 42000 write 55AA
+        # - 42020 write value or 42021 write value
+        # - 42010 set to 1 or 2
+        # - 42000 write 55BB = disable
 
       - name: "Marstek 2 Charge to SOC"
         unique_id: marstek_2_charge_to_soc
@@ -411,6 +563,11 @@ modbus:
         scale: 1
         offset: 0
         precision: 0
+        # Overrides 42010
+        # Works as follow:
+        # - 42000 write 55AA
+        # - 42011 write value 
+        # - 42000 write 55BB = disable
 
       - name: "Marstek 2 Forcible Charge Power"
         unique_id: marstek_2_forcible_charge_power
@@ -441,10 +598,19 @@ modbus:
         scan_interval: 10
         input_type: holding
         data_type: uint16
-        unit_of_measurement: ""
         scale: 1
         offset: 0
         precision: 0
+        # Set to 0 = Manual, see registers 43100-43129
+        # Set to 1 = Self consumption, aka Anti-feed
+        # Set to 2 = Set to AI mode, after set reverts to 1, still determining what register changes in AI mode
+
+# 43100-43129 are a set of registes accordint to the following
+# uint16: Weekday, bitmask, high byte = 0, low byte = weekday, bit 0 = monday, bit 7 = sunday.  value 00000001 = monday, 00001001 = monday and thursday, 01100000 = saturday and sunday
+# uint16: Start. Value = 2359 = 23:59, 2101 = 21:01
+# uint16: Stop (see start)
+# int16:  value - is charge, value + is discharge. Range = -2500 to +2500, keep in mind if discharge mode > 800 
+# uint16: 0 = disable, 0 = enable
 
       - name: "Marstek 2 Capacity and Power registers"
         unique_id: marstek_2_capacity_and_power_registers
@@ -455,41 +621,49 @@ modbus:
         data_type: custom
         count: 4
         structure: ">4H"
+        # 44000 = charging cutoff, implemented with automation
+        # 44001 = discharging cutoff, implemented with automation
+        # 44002 = max charge power, implemented with automation
+        # 44003 = max discharge power, implemented with automation
 
-      - name: "Marstek 2 Alarm State"
-        unique_id: marstek_2_alarm_state
-        address: 36000
-        scan_interval: 60
+      - name: "Marstek 2 Grid standard"
+        unique_id: marstek_2_grid_standard
+        address: 44100
         slave: 1
+        scan_interval: 300
         input_type: holding
-        data_type: custom
-        count: 2
-        structure: ">2H"
+        data_type: uint16
+        scale: 1
+        offset: 0
+        precision: 0
+        # 0 Auto (220-240V, 50/60Hz)
+        # 1 EN50549
+        # 2 NL
+        # 3 DE
+        # 4 AT
+        # 5 UK
+        # 6 ES
+        # 7 PL
+        # 8 IT
+        # 9 CN
 
-      - name: "Marstek 2 Fault State"
-        unique_id: marstek_2_fault_state
-        address: 36100
-        scan_interval: 60
-        slave: 1
-        input_type: holding
-        data_type: custom
-        count: 4
-        structure: ">4H"
+# 45603 Unknown
+# 45604 Unknown
 
     switches:
-      - name: "Marstek 2 Power Restriction (800W)"
-        unique_id: marstek_2_power_restriction
-        slave: 1
-        address: 41010
-        command_on: 1
-        command_off: 0
-        write_type: holding
-        verify:
-          address: 41010
-          delay: 30
-          input_type: holding
-          state_on: 1
-          state_off: 0
+#      - name: "Marstek 2 Power Restriction (800W)"
+#        unique_id: marstek_2_power_restriction
+#        slave: 1
+#        address: 41010
+#        command_on: 1
+#        command_off: 0
+#        write_type: holding
+#        verify:
+#          address: 41010
+#          delay: 30
+#          input_type: holding
+#          state_on: 1
+#          state_off: 0
 
       - name: "Marstek 2 Backup Enabled"
         unique_id: marstek_2_backup_enabled
@@ -919,8 +1093,9 @@ template:
             1:'Standby',
             2:'Charge',
             3:'Discharge',
-            4:'Backup mode',
-            5:'OTA upgrade' } %}
+            4:'Backup/Fault',
+            5:'Idle',
+            6:'AC bypass' } %}
           {{ mapping[states('sensor.marstek_2_inverter_state') | int] }}
 
       - name: "Marstek 2 Operational mode"
@@ -1112,6 +1287,19 @@ template:
         state_class: measurement
         state: >
           {{ ((states('sensor.marstek_2_battery_maximum_cell_voltage') | round(3) | float) - (states('sensor.marstek_2_battery_minimum_cell_voltage') | round(3) | float)) | round(3) | float }}
+
+      - name: "Marstek 2 Efficiency Percentage"
+        unique_id: marstek_2_efficiency_percentage
+        unit_of_measurement: "%"
+        state_class: measurement
+        state: >
+          {% set charging = states('sensor.marstek_2_daily_charging_in_kwh') | float(0) %}
+          {% set discharging = states('sensor.marstek_2_daily_discharging_in_kwh') | float(0) %}
+          {% if charging > 0 %}
+            {{ ((discharging / charging) * 100) | int }}
+          {% else %}
+            0
+          {% endif %}
 
 #---------
 # SWITCHES
