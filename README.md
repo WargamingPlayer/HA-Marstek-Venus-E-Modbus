@@ -4,10 +4,6 @@ Home Assistant Modbus Interface for Marstek Venus E
 ## Version information
 Version 2015.8.1  
 Added Sensors, fixed some bugs.  
-
-
-Version 0.0.5  
-Added sensors, fixed some scale bugs.
 MAC now displayed as string.  
 Software version added.  
 EMS version added.  
@@ -18,6 +14,9 @@ Grid standard added.
 Power restriction switch removed, added value only.   
 Efficiency added.  
 WiFi strength is now -dBm.  
+
+Version 0.0.5  
+Added sensors, fixed some scale bugs.
 
 Version 0.0.4
 This version contains now 3 files for the Marstek E Venus Modbus integration of 3 Marsteks. 
