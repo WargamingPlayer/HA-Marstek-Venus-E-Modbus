@@ -2,7 +2,7 @@
 Home Assistant Modbus Interface for Marstek Venus E 
 
 ## Version information
-Version 2015.8.1  
+Version 2025.8.1  
 Added Sensors, fixed some bugs.  
 MAC now displayed as string.  
 Software version added.  
