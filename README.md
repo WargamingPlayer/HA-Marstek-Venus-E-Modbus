@@ -2,9 +2,23 @@
 Home Assistant Modbus Interface for Marstek Venus E 
 
 ## Version information
+Version 2015.8.1  
+Added Sensors, fixed some bugs.  
+
+
 Version 0.0.5  
 Added sensors, fixed some scale bugs.
-  
+MAC now displayed as string.  
+Software version added.  
+EMS version added.  
+BMS version added.  
+Adjusted temp sensors to BMS 215, 213 had scale issue.  
+Inverter state 6 added.  
+Grid standard added.  
+Power restriction switch removed, added value only.   
+Efficiency added.  
+WiFi strength is now -dBm.  
+
 Version 0.0.4
 This version contains now 3 files for the Marstek E Venus Modbus integration of 3 Marsteks. 
 This version also contains a couple of termplates for consolidating values when using the "Power Flow Card Plus card".  
@@ -96,13 +110,17 @@ More information: https://gathering.tweakers.net/forum/list_messages/2282240
 ### Sensors per Marstek
 | Name                                | id                                    | type                | data           |
 |-------------------------------------|---------------------------------------|---------------------|----------------|
+| Marstek x Com Module version        | marstek_x_com_module_version          | string              | 12 characters  |
 | Marstek x Name                      | marstek_x_name                        | custom(10)          | 20 characters  |
+| Marstek x Software version          | marstek_x_software version            | unint(16)           | xx.y           |
+| Marstek x EMS version               | marstek_x_software version            | unint(16)           | xxx            |
+| Marstek x BMS version               | marstek_x_software version            | unint(16)           | xxx            |
 | Marstek x Wifi SSID                 | marstek_x_wifi_ssid                   | custom(16)          | 32 characters  |
 | Marstek x MAC                       | marstek_x_mac                         | custom(6)           | 12 bytes       |
 | Marstek x Wifi Status               | marstek_x_wifi_status                 | unint(16)           |                |
 | Marstek x BT Status                 | marstek_x_bt_status                   | unint(16)           |                |
 | Marstek x Cloud Status              | marstek_x_cloud_status                | unint(16)           |                |
-| Marstek x Wifi Signal Strength      | marstek_x_wifi_signal_strength        | unint(16)           | dBm            |
+| Marstek x Wifi Signal Strength      | marstek_x_wifi_signal_strength        | unint(16)           | -dBm           |
 | Marstek x Battery Voltage           | marstek_x_battery_voltage             | unint(16)           | V              |
 | Marstek x Battery Current           | marstek_x_battery_current             | int(16)             | W              | 
 | Marstek x Battery Power             | marstek_x_battery_power               | int(32)             | W              | 
@@ -111,7 +129,7 @@ More information: https://gathering.tweakers.net/forum/list_messages/2282240
 | Marstek x AC Voltage                | marstek_x_ac_voltage                  | unint(16)           | V              |
 | Marstek x AC Current                | marstek_x_ac_current                  | unint(16)           | A              |
 | Marstek x AC Power                  | marstek_x_ac_power                    | int(32)             | W              |
-| Marstek x AC Frequency**            | marstek_x_ac_frequency                | unint(16)           | Hz             |
+| Marstek x AC Frequency              | marstek_x_ac_frequency                | unint(16)           | Hz             |
 | Marstek x AC Offgrid Voltage        | marstek_x_ac_offgrid_voltage          | unint(16)           | V              |
 | Marstek x AC Offgrid Current        | marstek_x_ac_offgrid_current          | int(16)             | A              |
 | Marstek x AC Offgrid Power          | marstek_x_ac_offgrid_power            | int(32)             | W              |
@@ -122,8 +140,8 @@ More information: https://gathering.tweakers.net/forum/list_messages/2282240
 | Marstek x Min Cell Temperature      | marstek_x_min_cell_temperature        | int(16)             | °C             |
 | Marstek x Inverter State            | marstek_x_inverter_state              | int(16)             |                |
 | Marstek x Battery Charge Limits     | marstek_x_battery_charge_limits       | custom(3) uint(16)  | array          |
-| Marstek x Battery Maximum Cell V... | marstek_x_battery_maximum_cell_vol..  | float               | V              |
-| Marstek x Battery Minimum Cell V... | marstek_x_battery_minimum_cell_vol..  | float               | V              |
+| Marstek x Battery Maximum Cell V... | marstek_x_battery_maximum_cell_vol..  | float               | x.yyyV         |
+| Marstek x Battery Minimum Cell V... | marstek_x_battery_minimum_cell_vol..  | float               | x.yyyV         |
 | Marstek x RS485 Control Mode        | marstek_x_rs485_control_mode          | uint(16)            |                |
 | Marstek x Force Charge/Discharge M  | marstek_x_force_charge_discharge_mode | uint(16)            |                |
 | Marstek x Charge to SOC             | marstek_x_charge_to_soc               | uint(16)            | %              |
@@ -133,14 +151,15 @@ More information: https://gathering.tweakers.net/forum/list_messages/2282240
 | Marstek x Capacity and Power reg..  | marstek_x_capacity_and_power_registers| custom(4) uint(16)  | array          |
 | Marstek x Alarm State               | marstek_x_alarm_state                 | custom(2) uint(16)  | array          |
 | Marstek x Fault State               | marstek_x_fault_state                 | custom(4) uint(16)  | array          |
-| Marstek x Discharging in kWh        | marstek_x_discharging_in_kwh          | unint               | kWh            |
-| Marstek x Charging in kWh           | marstek_x_charging_in_kwh             | unint               | kWh            |
-** Value disabled in yaml.  
+| Marstek x Discharging in kWh        | marstek_x_discharging_in_kwh          | uint                | kWh            |
+| Marstek x Charging in kWh           | marstek_x_charging_in_kwh             | uint                | kWh            |
+| Marstek x Power Limit 800W          | marstek_x_power_limit_800w            | uint                | 0=yes, 1=no    |
+| Marstek x Grid standard             | marstek_x_grid_standard               | uint                | x              | 
+
 
 ### Switches
 | Name                                | id                                    | on                  | off            |
 |-------------------------------------|---------------------------------------|---------------------|----------------|
-| Marstek x Power Restriction (800W)  | marstek_1_power_restriction           | 1                   | 0              |
 | Marstek 1 Backup Enabled**          | marstek_1_backup_enabled              | 0                   | 1              |
 ** This switch reverses the modbus reading 
   
@@ -197,7 +216,8 @@ The automations sync the input fields.
 | Marstek x Battery minimum SOC (Discharge)               | marstek_x_battery_minimum_soc                | %         |
 | Marstek x Maximum Charge Power                          | marstek_x_max_charge_power                   | W         |
 | Marstek x Maximum Discharge Power                       | marstek_x_max_discharge_power                | W         |
-  Marstek x Battery Cell Voltage Delta                    | marstek_x_battery_cell_voltage_delta         | V         |
+| Marstek x Battery Cell Voltage Delta                    | marstek_x_battery_cell_voltage_delta         | V         |
+| Marstek x Efficiency Percentage                         | marstek_x_efficiency_percentage              | %         |
 
 
 ### Utility meters
