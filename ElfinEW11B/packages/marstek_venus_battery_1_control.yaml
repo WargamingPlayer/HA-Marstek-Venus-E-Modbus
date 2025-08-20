@@ -1,5 +1,5 @@
 # ----------------------
-# Version: 2025.8.1
+# Version: 2025.8.2
 # Note: Only for Marstek EMS 153 or higher
 # By: WargamingPlayer
 # Fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
@@ -381,9 +381,9 @@ modbus:
         unit_of_measurement: °C
         device_class: temperature
         state_class: measurement
-        scale: 0.1
+        scale: 1
         offset: 0
-        precision: 1
+        precision: 0
         # BMS v213 it is suddenly scale 1, BMS v215 it is scale 0.1 again
 
       - name: "Marstek 1 Min Cell Temperature"
@@ -396,9 +396,9 @@ modbus:
         unit_of_measurement: °C
         device_class: temperature
         state_class: measurement
-        scale: 0.1
+        scale: 1
         offset: 0
-        precision: 1
+        precision: 0
         # BMS v213 it is suddenly scale 1, BMS v215 it is scale 0.1 again
 
       - name: "Marstek 1 Inverter State"
@@ -1288,6 +1288,8 @@ template:
         state: >
           {{ ((states('sensor.marstek_1_battery_maximum_cell_voltage') | round(3) | float) - (states('sensor.marstek_1_battery_minimum_cell_voltage') | round(3) | float)) | round(3) | float }}
 
+      # Expiremental
+      # Calculation does not add up as it should, Tweakers is not correct on this.
       - name: "Marstek 1 Efficiency Percentage"
         unique_id: marstek_1_efficiency_percentage
         unit_of_measurement: "%"

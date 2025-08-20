@@ -2,7 +2,12 @@
 Home Assistant Modbus Interface for Marstek Venus E 
 
 ## Version information
-Version 2025.8.1  
+
+### Version 2025.8.2  
+Sensors min/max Cell temperature now correct.  
+Efficency percentage is all over the place. Need to find out how to make this working.  
+
+### Version 2025.8.1  
 Added Sensors, fixed some bugs.  
 MAC now displayed as string.  
 Software version added.  
@@ -15,21 +20,21 @@ Power restriction switch removed, added value only.
 Efficiency added.  
 WiFi strength is now -dBm.  
 
-Version 0.0.5  
+### Version 0.0.5  
 Added sensors, fixed some scale bugs.
 
-Version 0.0.4
+### Version 0.0.4
 This version contains now 3 files for the Marstek E Venus Modbus integration of 3 Marsteks. 
 This version also contains a couple of termplates for consolidating values when using the "Power Flow Card Plus card".  
 
-Version 0.0.3  
+### Version 0.0.3  
 Added automations.  
   
-Version 0.0.2  
+### Version 0.0.2  
 Bug fixes
   
-Version 0.0.1  
-First version
+### Version 0.0.1  
+First version, fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11  
 
 ## Folders:
   [root]\
@@ -38,6 +43,8 @@ First version
 
 ## More information:
 More information: https://gathering.tweakers.net/forum/list_messages/2282240  
+Pascallj Modbus: https://docs.google.com/spreadsheets/d/e/2PACX-1vSyu0LKoSrQQzvrosMH-sOcSKT7pgHSXEwAcIJe0cy3NCrmwiLH6VDGjh0_2HOKhL0nZmnI3Mk5Fb_d/pubhtml?gid=319238506&single=true  
+
 
 ## Disclaimer:
   The Home Assistant files from the packages folder is based on from @github/Superduper1969  
@@ -45,6 +52,15 @@ More information: https://gathering.tweakers.net/forum/list_messages/2282240
 
 
 # Installation: 
+  ## Marstek V2 Modbus cable to Elfin EW11B
+  | Pin | Color  | EW11 Pin | Signal |
+  |-----|--------|----------|--------|
+  | 1   | Yellow | 1        | A      |
+  | 2   | Red    | 4        | B      |
+  | 3   | Black  | 3        | GND    |
+  | 4   | -      | -        | -      |
+  | 5   | Black  | 2        | VCC    |
+  | 6   | Red    | -        | -      |
   ## Elfin EW11B:
     https://nl.aliexpress.com/item/32916128353.html  
     Note: Use the Wide range Voltage version.  
