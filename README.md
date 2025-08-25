@@ -3,6 +3,9 @@ Home Assistant Modbus Interface for Marstek Venus E
 
 ## Version information
 
+### Version 2025.8.3  
+Registers 33000 - 33010 added.  
+
 ### Version 2025.8.2  
 Sensors min/max Cell temperature now correct.  
 Efficency percentage is all over the place. Need to find out how to make this working.  
@@ -61,6 +64,7 @@ Pascallj Modbus: https://docs.google.com/spreadsheets/d/e/2PACX-1vSyu0LKoSrQQzvr
   | 4   | -      | -        | -      |
   | 5   | Black  | 2        | VCC    |
   | 6   | Red    | -        | -      |
+  
   ## Elfin EW11B:
     https://nl.aliexpress.com/item/32916128353.html  
     Note: Use the Wide range Voltage version.  
@@ -148,6 +152,12 @@ Pascallj Modbus: https://docs.google.com/spreadsheets/d/e/2PACX-1vSyu0LKoSrQQzvr
 | Marstek x AC Offgrid Voltage        | marstek_x_ac_offgrid_voltage          | unint(16)           | V              |
 | Marstek x AC Offgrid Current        | marstek_x_ac_offgrid_current          | int(16)             | A              |
 | Marstek x AC Offgrid Power          | marstek_x_ac_offgrid_power            | int(32)             | W              |
+| Marstek x Total Charging Energy     | marstek_x_total_charging_energy       | unint(32)           | kWh            |
+| Marstek x Total Discharging Energy  | marstek_x_total_discharging_energy    | unint(32)           | kWh            |
+| Marstek x Daily Charging Energy     | marstek_x_daily_charging_energy       | unint(32)           | kWh            |
+| Marstek x Daily Discharging Energy  | marstek_x_daily_discharging_energy    | unint(32)           | kWh            |
+| Marstek x Monthly Charging Energy   | marstek_x_monthly_charging_energy     | unint(32)           | kWh            |
+| Marstek x Monthly Discharging Energy| marstek_x_monthly_discharging_energy  | unint(32)           | kWh            |
 | Marstek x Internal Temperature      | marstek_x_internal_temperature        | int(16)             | °C             |
 | Marstek x Internal MOS1 Temperature | marstek_x_internal_mos1_temperature   | int(16)             | °C             |
 | Marstek x Internal MOS2 Temperature | marstek_x_internal_mos2_temperature   | int(16)             | °C             |
@@ -175,8 +185,11 @@ Pascallj Modbus: https://docs.google.com/spreadsheets/d/e/2PACX-1vSyu0LKoSrQQzvr
 ### Switches
 | Name                                | id                                    | on                  | off            |
 |-------------------------------------|---------------------------------------|---------------------|----------------|
-| Marstek 1 Backup Enabled**          | marstek_1_backup_enabled              | 0                   | 1              |
-** This switch reverses the modbus reading 
+| Marstek x Device Reset**            | marstek_x_device_reset                | 0x55AA              | 0              |
+| Marstek x Factory Reset**           | marstek_x_factory_reset               | 0x55AA              | 0              |
+| Marstek x Backup Enabled***         | marstek_x_backup_enabled              | 0                   | 1              |
+** Experimental  
+*** This switch reverses the modbus reading  
   
 ### Input numbers & Input select
 These numbers are adjusted by the state of the Venus. And also adjust the state of the Venus when changed. This is done  

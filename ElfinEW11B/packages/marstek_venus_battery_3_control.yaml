@@ -1,5 +1,5 @@
 # ----------------------
-# Version: 2025.8.2
+# Version: 2025.8.3
 # Note: Only for Marstek EMS 153 or higher
 # By: WargamingPlayer
 # Fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
@@ -322,12 +322,89 @@ modbus:
         offset: 0
         precision: 0
 
-# 33000 Not implemented, Total Charging Energy, uint32, 0.01kWh
-# 33002 Not implemented, Total Discharing Energy, uint32, 0.01kWh
-# 33004 Not implemented, Daily Charging Energy, uint32, 0.01kWh
-# 33006 Not implemented, Daily Discharging Energy, uint32, 0.01kWh
-# 33008 Not implemented, Daily Charging Energy, uint32, 0.01kWh
-# 33010 Not implemented, Daily Discharging Energy, uint32, 0.01kWh
+      - name: "Marstek 3 Total Charging Energy"
+        unique_id: marstek_3_total_charging_energy
+        address: 33000
+        slave: 1
+        scan_interval: 30
+        input_type: holding
+        data_type: uint32
+        unit_of_measurement: kWh
+        device_class: Energy
+        state_class: measurement
+        scale: 0.01
+        offset: 0
+        precision: 2
+
+      - name: "Marstek 3 Total Discharging Energy"
+        unique_id: marstek_3_total_discharging_energy
+        address: 33002
+        slave: 1
+        scan_interval: 30
+        input_type: holding
+        data_type: uint32
+        unit_of_measurement: kWh
+        device_class: Energy
+        state_class: measurement
+        scale: 0.01
+        offset: 0
+        precision: 2
+
+      - name: "Marstek 3 Daily Charging Energy"
+        unique_id: marstek_3_daily_charging_energy
+        address: 33004
+        slave: 1
+        scan_interval: 30
+        input_type: holding
+        data_type: uint32
+        unit_of_measurement: kWh
+        device_class: Energy
+        state_class: measurement
+        scale: 0.01
+        offset: 0
+        precision: 2
+
+      - name: "Marstek 3 Daily Discharging Energy"
+        unique_id: marstek_3_daily_discharging_energy
+        address: 33006
+        slave: 1
+        scan_interval: 30
+        input_type: holding
+        data_type: uint32
+        unit_of_measurement: kWh
+        device_class: Energy
+        state_class: measurement
+        scale: 0.01
+        offset: 0
+        precision: 2
+
+      - name: "Marstek 3 monthly Charging Energy"
+        unique_id: marstek_3_monthly_charging_energy
+        address: 33008
+        slave: 1
+        scan_interval: 30
+        input_type: holding
+        data_type: uint32
+        unit_of_measurement: kWh
+        device_class: Energy
+        state_class: measurement
+        scale: 0.01
+        offset: 0
+        precision: 2
+
+      - name: "Marstek 3 Monthly Discharging Energy"
+        unique_id: marstek_3_monthly_discharging_energy
+        address: 33010
+        slave: 1
+        scan_interval: 30
+        input_type: holding
+        data_type: uint32
+        unit_of_measurement: kWh
+        device_class: Energy
+        state_class: measurement
+        scale: 0.01
+        offset: 0
+        precision: 2
 
       - name: "Marstek 3 Internal Temperature"
         unique_id: marstek_3_internal_temperature
@@ -651,6 +728,34 @@ modbus:
 # 45604 Unknown
 
     switches:
+      - name: "Marstek 3 Device Restart"
+        unique_id: marstek_3_device_restart
+        slave: 1
+        address: 41000
+        command_on: 21930
+        command_off: 0
+        write_type: holding
+        verify:
+          address: 41000
+          delay: 10
+          input_type: holding
+          state_on: 21930
+          state_off: 0
+
+      - name: "Marstek 3 Factory Reset"
+        unique_id: marstek_3_factory_reset
+        slave: 1
+        address: 41001
+        command_on: 21930
+        command_off: 0
+        write_type: holding
+        verify:
+          address: 41001
+          delay: 10
+          input_type: holding
+          state_on: 21930
+          state_off: 0
+
 #      - name: "Marstek 3 Power Restriction (800W)"
 #        unique_id: marstek_3_power_restriction
 #        slave: 1
