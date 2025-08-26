@@ -1,5 +1,5 @@
 # ----------------------
-# Version: 2025.8.3
+# Version: 2025.8.4
 # Note: Only for Marstek EMS 153 or higher
 # By: WargamingPlayer
 # Fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
@@ -18,19 +18,19 @@ modbus:
     timeout: 5
 
     sensors:
-# 30000
-# 30001 = 32100
-# 30002 = 32101
-# 30003 
-# 30004 = 32200
-# 30005 = 32100
-# 30006 = 32300
-# 30007
-# 30008 = 35001
-# 30009 = 35002
-# 30010 = 35000
-# 30100 = 36100
-# 30200
+      # 30000
+      # 30001 = 32100
+      # 30002 = 32101
+      # 30003
+      # 30004 = 32200
+      # 30005 = 32100
+      # 30006 = 32300
+      # 30007
+      # 30008 = 35001
+      # 30009 = 35002
+      # 30010 = 35000
+      # 30100 = 36100
+      # 30200
 
       - name: "Marstek 1 WiFi Status"
         unique_id: marstek_1_wifi_status
@@ -81,9 +81,9 @@ modbus:
         offset: 0
         precision: 0
 
-# 30399 = 31102 (in hex)
-# 30400 = 31100 (in hex)
-# 30401 = 31101 (in hex)
+      # 30399 = 31102 (in hex)
+      # 30400 = 31100 (in hex)
+      # 30401 = 31101 (in hex)
 
       - name: "Marstek 1 MAC"
         unique_id: marstek_1_mac
@@ -95,9 +95,9 @@ modbus:
         count: 6
         structure: ">12s"
 
-# 30500
-# 30600
-# 30700
+      # 30500
+      # 30600
+      # 30700
 
       - name: "Marstek 1 COM Module version"
         unique_id: marstek_1_com_module_version
@@ -140,7 +140,7 @@ modbus:
         scale: 1
         offset: 0
         precision: 0
-     
+
       - name: "Marstek 1 BMS version"
         unique_id: marstek_1_bms_version
         address: 31102
@@ -150,9 +150,9 @@ modbus:
         data_type: uint16
         scale: 1
         offset: 0
-        precision: 0        
+        precision: 0
 
-# 31200 SN but is empty
+      # 31200 SN but is empty
 
       - name: "Marstek 1 Battery Voltage"
         unique_id: marstek_1_battery_voltage
@@ -218,7 +218,7 @@ modbus:
         input_type: holding
         data_type: uint16
         unit_of_measurement: kWh
-        device_class: power
+        device_class: energy_storage
         state_class: measurement
         scale: 0.001
         offset: 0
@@ -485,7 +485,7 @@ modbus:
         scan_interval: 5
         input_type: holding
         data_type: uint16
-        state_class: measurement        
+        state_class: measurement
         # 0 Sleep
         # 1 Stand-By
         # 2 Charge
@@ -528,14 +528,14 @@ modbus:
         count: 4
         structure: ">4H"
 
-# 36104 Absent???
-# 37000 always 1
-# 37001 always 0
-# 37002 always 0
-# 37003 always 0
-# 37004 = 32202
-# 37005 = 32104
-# 37006 = 35010 = 35011
+      # 36104 Absent???
+      # 37000 always 1
+      # 37001 always 0
+      # 37002 always 0
+      # 37003 always 0
+      # 37004 = 32202
+      # 37005 = 32104
+      # 37006 = 35010 = 35011
 
       - name: "Marstek 1 Battery Maximum Cell Voltage"
         unique_id: marstek_1_battery_maximum_cell_voltage
@@ -563,14 +563,12 @@ modbus:
         offset: 0
         precision: 3
 
-# 37009 llways 0
-# 37010 load balancer ???
-# 37011 mmmqt and 37012= 1 when balancing? maybe trade mode??
-# 37013 8 bytes = 36100
-
-# 41000 = Device restart, we do not implement, write 0x55AA = restart
-# 41001 = Factory reset, we do not implement, write 0x55AA = reset
-
+      # 37009 llways 0
+      # 37010 load balancer ???
+      # 37011 mmmqt and 37012= 1 when balancing? maybe trade mode??
+      # 37013 8 bytes = 36100
+      # 41000 = Device restart, we do not implement, write 0x55AA = restart
+      # 41001 = Factory reset, we do not implement, write 0x55AA = reset
       - name: "Marstek 1 Power Limit 800W"
         unique_id: marstek_1_power_limit_800w
         slave: 1
@@ -583,9 +581,8 @@ modbus:
         precision: 0
         # Not implemented, only read
 
-
-# 41100 = Modbus address, always 1, we do nothing with this
-# 41200 = Backup function, see switches, we implemented it
+      # 41100 = Modbus address, always 1, we do nothing with this
+      # 41200 = Backup function, see switches, we implemented it
 
       - name: "Marstek 1 WiFi SSID"
         unique_id: marstek_1_wifi_ssid
@@ -597,8 +594,7 @@ modbus:
         count: 16
         structure: ">32s"
 
-# 41516 Last 2 chars of Wifi Password, we do not implement
-
+      # 41516 Last 2 chars of Wifi Password, we do not implement
       - name: "Marstek 1 RS485 Control Mode"
         unique_id: marstek_1_rs485_control_mode
         address: 42000
@@ -643,7 +639,7 @@ modbus:
         # Overrides 42010
         # Works as follow:
         # - 42000 write 55AA
-        # - 42011 write value 
+        # - 42011 write value
         # - 42000 write 55BB = disable
 
       - name: "Marstek 1 Forcible Charge Power"
@@ -682,13 +678,12 @@ modbus:
         # Set to 1 = Self consumption, aka Anti-feed
         # Set to 2 = Set to AI mode, after set reverts to 1, still determining what register changes in AI mode
 
-# 43100-43129 are a set of registes accordint to the following
-# uint16: Weekday, bitmask, high byte = 0, low byte = weekday, bit 0 = monday, bit 7 = sunday.  value 00000001 = monday, 00001001 = monday and thursday, 01100000 = saturday and sunday
-# uint16: Start. Value = 2359 = 23:59, 2101 = 21:01
-# uint16: Stop (see start)
-# int16:  value - is charge, value + is discharge. Range = -2500 to +2500, keep in mind if discharge mode > 800 
-# uint16: 0 = disable, 0 = enable
-
+      # 43100-43129 are a set of registes accordint to the following
+      # uint16: Weekday, bitmask, high byte = 0, low byte = weekday, bit 0 = monday, bit 7 = sunday.  value 00000001 = monday, 00001001 = monday and thursday, 01100000 = saturday and sunday
+      # uint16: Start. Value = 2359 = 23:59, 2101 = 21:01
+      # uint16: Stop (see start)
+      # int16:  value - is charge, value + is discharge. Range = -2500 to +2500, keep in mind if discharge mode > 800
+      # uint16: 0 = disable, 0 = enable
       - name: "Marstek 1 Capacity and Power registers"
         unique_id: marstek_1_capacity_and_power_registers
         address: 44000
@@ -724,8 +719,8 @@ modbus:
         # 8 IT
         # 9 CN
 
-# 45603 Unknown
-# 45604 Unknown
+    # 45603 Unknown
+    # 45604 Unknown
 
     switches:
       - name: "Marstek 1 Device Restart"
@@ -756,19 +751,19 @@ modbus:
           state_on: 21930
           state_off: 0
 
-#      - name: "Marstek 1 Power Restriction (800W)"
-#        unique_id: marstek_1_power_restriction
-#        slave: 1
-#        address: 41010
-#        command_on: 1
-#        command_off: 0
-#        write_type: holding
-#        verify:
-#          address: 41010
-#          delay: 30
-#          input_type: holding
-#          state_on: 1
-#          state_off: 0
+      #      - name: "Marstek 1 Power Restriction (800W)"
+      #        unique_id: marstek_1_power_restriction
+      #        slave: 1
+      #        address: 41010
+      #        command_on: 1
+      #        command_off: 0
+      #        write_type: holding
+      #        verify:
+      #          address: 41010
+      #          delay: 30
+      #          input_type: holding
+      #          state_on: 1
+      #          state_off: 0
 
       - name: "Marstek 1 Backup Enabled"
         unique_id: marstek_1_backup_enabled
@@ -1400,13 +1395,30 @@ template:
         unit_of_measurement: "%"
         state_class: measurement
         state: >
-          {% set charging = states('sensor.marstek_1_daily_charging_in_kwh') | float(0) %}
-          {% set discharging = states('sensor.marstek_1_daily_discharging_in_kwh') | float(0) %}
+          {% set charging = states('sensor.marstek_1_total_charging_energy') | float(0) %}
+          {% set discharging = states('sensor.marstek_1_total_discharging_energy') | float(0) %}
           {% if charging > 0 %}
             {{ ((discharging / charging) * 100) | int }}
           {% else %}
             0
           {% endif %}
+
+      - name: "Marstek 1 Battery SOC in Wh"
+        unique_id: marstek_1_battery_soc_in_Wh
+        unit_of_measurement: Wh
+        state_class: measurement
+        device_class: energy_storage
+        state: >
+          {% set maxbat = 5 | float %}
+          {% set currentsoc= 11.0 | float %}
+          {% if has_value('sensor.marstek_1_battery_energy') %}
+            {% set maxbat= (states("sensor.marstek_1_battery_energy") | float * 1024) | round(0) %}
+          {% endif %}
+          {% if has_value('sensor.marstek_1_battery_soc') %}
+            {% set currentsoc= states("sensor.marstek_1_battery_soc") | float | round(1) %}
+          {% endif %}
+          {% set currentbat= (currentsoc | float * (maxbat / 100 )) | int %}
+          {{ currentbat }}
 
 #---------
 # SWITCHES

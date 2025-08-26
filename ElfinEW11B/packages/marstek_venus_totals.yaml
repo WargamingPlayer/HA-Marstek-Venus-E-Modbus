@@ -1,5 +1,5 @@
 # ----------------------
-# Version: 2025.8.3
+# Version: 2025.8.4
 # Note: Only for Marstek EMS 153 or higher
 # By: WargamingPlayer
 # Fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
@@ -55,7 +55,7 @@ template:
       - name: "Marstek Batteries Energy"
         unique_id: marstek_batteries_energy
         unit_of_measurement: Wh
-        device_class: power
+        device_class: energy_storage
         state_class: measurement
         state: >
           {%- set cap1=0 | int %}
@@ -76,44 +76,29 @@ template:
       - name: "Marstek Batteries Charge"
         unique_id: marstek_batteries_charge
         unit_of_measurement: Wh
-        device_class: power
+        device_class: energy_storage
         state_class: measurement
         state: >
-          {%- set soc1=0 | int %}
-          {%- set soc2=0 | int %}
-          {%- set soc3=0 | int %}
           {%- set cap1=0 | int %}
           {%- set cap2=0 | int %}
           {%- set cap3=0 | int %}
-          {%- if has_value('sensor.marstek_1_battery_soc') %}
-          {%- set soc1= states('sensor.marstek_1_battery_soc') | float %}
+          {%- if has_value('sensor.marstek_1_battery_soc_in_Wh') %}
+          {%- set cap1= states('sensor.marstek_1_battery_soc_in_Wh') | int %}
           {%- endif %}
-          {%- if has_value('sensor.marstek_2_battery_soc') %}
-          {%- set soc2= states('sensor.marstek_2_battery_soc') | float %}
+          {%- if has_value('sensor.marstek_2_battery_soc_in_Wh') %}
+          {%- set cap2= states('sensor.marstek_2_battery_soc_in_Wh') | int %}
           {%- endif %}
-          {%- if has_value('sensor.marstek_3_battery_soc') %}
-          {%- set soc3= states('sensor.marstek_3_battery_soc') | float %}
+          {%- if has_value('sensor.marstek_3_battery_soc_in_Wh') %}
+          {%- set cap3= states('sensor.marstek_3_battery_soc_in_Wh') | int %}
           {%- endif %}
-          {%- if has_value('sensor.marstek_1_battery_energy') %}
-          {%- set cap1= states('sensor.marstek_1_battery_energy') | int * 1024 |  int %}
-          {%- endif %}
-          {%- if has_value('sensor.marstek_2_battery_energy') %}
-          {%- set cap2= states('sensor.marstek_2_battery_energy') | int * 1024 |  int %}
-          {%- endif %}
-          {%- if has_value('sensor.marstek_3_battery_energy') %}
-          {%- set cap2= states('sensor.marstek_3_battery_energy') | int * 1024 |  int %}
-          {%- endif %}
-          {%- set totalcap= cap1 + cap2 + cap3 | int %}
-          {%- set total1= (cap1 * (soc1 | float / 100) | float ) | float %}
-          {%- set total2= (cap2 * (soc2 | float / 100) | float ) | float %}
-          {%- set total3= (cap3 * (soc3 | float / 100) | float ) | float %}
-          {%- set total= total1 + total2 + total3 | float %}
+          {%- set total= cap1 + cap2 + cap3 | int %}
           {{ total | round(1) }}
 
   - sensor:
       - name: "Marstek Batteries SOC"
         unique_id: marstek_batteries_soc
         unit_of_measurement: "%"
+        device_class: battery
         state_class: measurement
         state: >
           {%- set totalcap=0 | float %}
@@ -125,6 +110,40 @@ template:
           {%- set charge= states('sensor.marstek_batteries_charge') | float %}
           {%- endif %}
           {{ (((charge / totalcap | float) | float) * 100) | round(1) }}
+
+  - sensor:
+      # Expiremental
+      # Calculation does not add up as it should, Tweakers is not correct on this.
+      - name: "Marstek Efficiency Percentage"
+        unique_id: marstek_efficiency_percentage
+        unit_of_measurement: "%"
+        state_class: measurement
+        state: >
+          {%- set charging1 = 0 | float %}
+          {%- set charging2 = 0 | float %}
+          {%- set charging3 = 0 | float %}
+          {%- set discharging1 = 0 | float %}
+          {%- set discharging2 = 0 | float %}
+          {%- set discharging3 = 0 | float %}
+          {%- if has_value('sensor.marstek_1_total_charging_energy') %}
+            {%- set charging1 = states('sensor.marstek_1_total_charging_energy') | float(0) %}
+            {%- set discharging1 = states('sensor.marstek_1_total_discharging_energy') | float(0) %}
+          {%- endif %}
+          {%- if has_value('sensor.marstek_2_total_charging_energy') %}
+            {%- set charging2 = states('sensor.marstek_2_total_charging_energy') | float(0) %}
+            {%- set discharging2 = states('sensor.marstek_2_total_discharging_energy') | float(0) %}
+          {%- endif %}
+          {%- if has_value('sensor.marstek_2_total_charging_energy') %}
+            {%- set charging3 = states('sensor.marstek_1_total_charging_energy') | float(0) %}
+            {%- set discharging3 = states('sensor.marstek_1_total_discharging_energy') | float(0) %}
+          {%- endif %}
+          {% set charging = charging1 + charging2 + charging3 | float %}
+          {% set discharging = discharging1 + discharging2 + discharging3 | float %}
+          {% if charging > 0 %}
+            {{ ((discharging / charging) * 100) | int }}
+          {% else %}
+            0
+          {% endif %}
 
 # -------
 # SENSORS

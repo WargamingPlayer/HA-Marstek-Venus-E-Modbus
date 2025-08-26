@@ -3,6 +3,14 @@ Home Assistant Modbus Interface for Marstek Venus E
 
 ## Version information
 
+### Version 2025.8.4  
+Changed Battery load values to device_type: energy_storage.  
+Created (liniear) based sensors: Marstek_1_battery_soc_in_Wh.   
+Removed bug from marstek_venus_totals.yaml where 3rd Marstek is not calculated correct in totals.  
+Rebuid the Effeciency Sensors. Now based on total from the Venus C/E.  
+Added a total efficiency sensor.  
+Reformatted the yaml files.  
+
 ### Version 2025.8.3  
 Registers 33000 - 33010 added.  
 
@@ -246,7 +254,7 @@ The automations sync the input fields.
 | Marstek x Maximum Discharge Power                       | marstek_x_max_discharge_power                | W         |
 | Marstek x Battery Cell Voltage Delta                    | marstek_x_battery_cell_voltage_delta         | V         |
 | Marstek x Efficiency Percentage                         | marstek_x_efficiency_percentage              | %         |
-
+| Marstek x Battery SOC in Wh                             | marstek_x_battery_soc_in_Wh                  | Wh        |
 
 ### Utility meters
 | Name                                                    | id                                           | Interval  |
