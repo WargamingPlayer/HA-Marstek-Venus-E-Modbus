@@ -1364,7 +1364,7 @@ template:
         unit_of_measurement: "%"
         state: >
           {% set sens= states('sensor.marstek_2_capacity_and_power_registers').split(',')[1] | float(default=0) %}
-          {{ ((sens - 1) / 10) | round(1) }}
+          {{ ((sens / 10) -1) | round(1) }}
 
       - name: "Marstek 2 Maximum Charge Power"
         unique_id: marstek_2_max_charge_power
