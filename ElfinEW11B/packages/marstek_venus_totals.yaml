@@ -1,5 +1,5 @@
 # ----------------------
-# Version: 2025.8.4
+# Version: 2025.8.5
 # Note: Only for Marstek EMS 153 or higher
 # By: WargamingPlayer
 # Fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
@@ -101,15 +101,16 @@ template:
         device_class: battery
         state_class: measurement
         state: >
-          {%- set totalcap=0 | float %}
-          {%- set charge=0 | float %}
+          {%- set totalcap=1 | float(default=1) %}
+          {%- set charge=1 | float(default=1) %}
           {%- if has_value('sensor.marstek_batteries_energy') %}
-          {%- set totalcap= states('sensor.marstek_batteries_energy') | float %}
+            {%- set totalcap= states('sensor.marstek_batteries_energy') | float(default=0) %}
           {%- endif %}
           {%- if has_value('sensor.marstek_batteries_charge') %}
-          {%- set charge= states('sensor.marstek_batteries_charge') | float %}
+            {%- set charge= states('sensor.marstek_batteries_charge') | float(default=0) %}
           {%- endif %}
-          {{ (((charge / totalcap | float) | float) * 100) | round(1) }}
+          {{ ((charge / totalcap ) | float(default=0) * 100) | round(1) }}  
+
 
   - sensor:
       # Expiremental
@@ -119,26 +120,26 @@ template:
         unit_of_measurement: "%"
         state_class: measurement
         state: >
-          {%- set charging1 = 0 | float %}
-          {%- set charging2 = 0 | float %}
-          {%- set charging3 = 0 | float %}
-          {%- set discharging1 = 0 | float %}
-          {%- set discharging2 = 0 | float %}
-          {%- set discharging3 = 0 | float %}
+          {%- set charging1 = 0 | float(default=0) %}
+          {%- set charging2 = 0 | float(default=0) %}
+          {%- set charging3 = 0 | float(default=0) %}
+          {%- set discharging1 = 0 | float(default=0) %}
+          {%- set discharging2 = 0 | float(default=0) %}
+          {%- set discharging3 = 0 | float(default=0) %}
           {%- if has_value('sensor.marstek_1_total_charging_energy') %}
-            {%- set charging1 = states('sensor.marstek_1_total_charging_energy') | float(0) %}
-            {%- set discharging1 = states('sensor.marstek_1_total_discharging_energy') | float(0) %}
+            {%- set charging1 = states('sensor.marstek_1_total_charging_energy') | float(default=0) %}
+            {%- set discharging1 = states('sensor.marstek_1_total_discharging_energy') | float(default=0) %}
           {%- endif %}
           {%- if has_value('sensor.marstek_2_total_charging_energy') %}
-            {%- set charging2 = states('sensor.marstek_2_total_charging_energy') | float(0) %}
-            {%- set discharging2 = states('sensor.marstek_2_total_discharging_energy') | float(0) %}
+            {%- set charging2 = states('sensor.marstek_2_total_charging_energy') | float(default=0) %}
+            {%- set discharging2 = states('sensor.marstek_2_total_discharging_energy') | float(default=0) %}
           {%- endif %}
           {%- if has_value('sensor.marstek_2_total_charging_energy') %}
-            {%- set charging3 = states('sensor.marstek_1_total_charging_energy') | float(0) %}
-            {%- set discharging3 = states('sensor.marstek_1_total_discharging_energy') | float(0) %}
+            {%- set charging3 = states('sensor.marstek_1_total_charging_energy') | float(default=0) %}
+            {%- set discharging3 = states('sensor.marstek_1_total_discharging_energy') | float(default=0) %}
           {%- endif %}
-          {% set charging = charging1 + charging2 + charging3 | float %}
-          {% set discharging = discharging1 + discharging2 + discharging3 | float %}
+          {% set charging = charging1 + charging2 + charging3 | float(default=0) %}
+          {% set discharging = discharging1 + discharging2 + discharging3 | float(default=0) %}
           {% if charging > 0 %}
             {{ ((discharging / charging) * 100) | int }}
           {% else %}

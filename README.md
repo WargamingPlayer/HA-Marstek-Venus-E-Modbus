@@ -3,6 +3,16 @@ Home Assistant Modbus Interface for Marstek Venus E
 
 ## Version information
 
+### Version 2025.8.5
+Fixed Energy based sensors wrong type, measurement to total_increasing.
+Fixed devide by 0 bug.  
+Fixed Float default values to default=0 or default=1.  
+Fixed automation bug where int was used instead of float.  
+Fixed efficiency sensor devision by 0.  
+Fixed misalligned () causing values not be correct.  
+Splited single line of code for some sensors to multiple lines to improve readability.  
+Fixed some time values.  
+
 ### Version 2025.8.4  
 Changed Battery load values to device_type: energy_storage.  
 Created (liniear) based sensors: Marstek_1_battery_soc_in_Wh.   

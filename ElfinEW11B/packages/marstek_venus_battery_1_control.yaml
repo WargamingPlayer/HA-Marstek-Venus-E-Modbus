@@ -1,5 +1,5 @@
 # ----------------------
-# Version: 2025.8.4
+# Version: 2025.8.5
 # Note: Only for Marstek EMS 153 or higher
 # By: WargamingPlayer
 # Fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
@@ -330,8 +330,8 @@ modbus:
         input_type: holding
         data_type: uint32
         unit_of_measurement: kWh
-        device_class: Energy
-        state_class: measurement
+        device_class: energy
+        state_class: total_increasing
         scale: 0.01
         offset: 0
         precision: 2
@@ -344,8 +344,8 @@ modbus:
         input_type: holding
         data_type: uint32
         unit_of_measurement: kWh
-        device_class: Energy
-        state_class: measurement
+        device_class: energy
+        state_class: total_increasing
         scale: 0.01
         offset: 0
         precision: 2
@@ -358,8 +358,8 @@ modbus:
         input_type: holding
         data_type: uint32
         unit_of_measurement: kWh
-        device_class: Energy
-        state_class: measurement
+        device_class: energy
+        state_class: total_increasing
         scale: 0.01
         offset: 0
         precision: 2
@@ -372,8 +372,8 @@ modbus:
         input_type: holding
         data_type: uint32
         unit_of_measurement: kWh
-        device_class: Energy
-        state_class: measurement
+        device_class: energy
+        state_class: total_increasing
         scale: 0.01
         offset: 0
         precision: 2
@@ -386,8 +386,8 @@ modbus:
         input_type: holding
         data_type: uint32
         unit_of_measurement: kWh
-        device_class: Energy
-        state_class: measurement
+        device_class: energy
+        state_class: total_increasing
         scale: 0.01
         offset: 0
         precision: 2
@@ -400,8 +400,8 @@ modbus:
         input_type: holding
         data_type: uint32
         unit_of_measurement: kWh
-        device_class: Energy
-        state_class: measurement
+        device_class: energy
+        state_class: total_increasing
         scale: 0.01
         offset: 0
         precision: 2
@@ -1141,8 +1141,8 @@ template:
         device_class: power
         state_class: measurement
         state: >
-          {% if states('sensor.marstek_1_ac_power') | float < 0 %}
-            {{ (states('sensor.marstek_1_ac_power') | float) *-1 }}
+          {% if states('sensor.marstek_1_ac_power') | float(default=0) < 0 %}
+            {{ states('sensor.marstek_1_ac_power') | float(default=0) * -1 }}
           {% else %}
             0
           {% endif %}
@@ -1153,8 +1153,8 @@ template:
         device_class: power
         state_class: measurement
         state: >
-          {% if states('sensor.marstek_1_ac_power') | float > 0 %}
-            {{ (states('sensor.marstek_1_ac_power') | float) }}
+          {% if states('sensor.marstek_1_ac_power') | float(default=0) > 0 %}
+            {{ states('sensor.marstek_1_ac_power') | float(default=0) }}
           {% else %}
             0
           {% endif %}
@@ -1356,13 +1356,15 @@ template:
         unique_id: marstek_1_battery_maximum_soc
         unit_of_measurement: "%"
         state: >
-          {{ ((states('sensor.marstek_1_capacity_and_power_registers').split(',')[0] | float ) / 10) | round(1) }}
+          {% set sens= states('sensor.marstek_1_capacity_and_power_registers').split(',')[0] | float(default=0)  %}
+          {{ (sens / 10) | round(1) }}
 
       - name: "Marstek 1 Battery minimum SOC (Discharge)"
         unique_id: marstek_1_battery_minimum_soc
         unit_of_measurement: "%"
         state: >
-          {{ (((states('sensor.marstek_1_capacity_and_power_registers').split(',')[1] | float ) / 10) - 1 ) | round(1) }}
+          {% set sens= states('sensor.marstek_1_capacity_and_power_registers').split(',')[1] | float(default=0)  %}
+          {{ (sens / 10) | round(1) }}
 
       - name: "Marstek 1 Maximum Charge Power"
         unique_id: marstek_1_max_charge_power
@@ -1386,7 +1388,9 @@ template:
         device_class: voltage
         state_class: measurement
         state: >
-          {{ ((states('sensor.marstek_1_battery_maximum_cell_voltage') | round(3) | float) - (states('sensor.marstek_1_battery_minimum_cell_voltage') | round(3) | float)) | round(3) | float }}
+          {% set sens1= states('sensor.marstek_1_battery_maximum_cell_voltage') | round(3) | float(default=0) %}
+          {% set sens2= states('sensor.marstek_1_battery_minimum_cell_voltage') | round(3) | float(default=0) %}
+          {{ (sens1 - sens2) | round(3) | float(default=0) }}
 
       # Expiremental
       # Calculation does not add up as it should, Tweakers is not correct on this.
@@ -1409,15 +1413,15 @@ template:
         state_class: measurement
         device_class: energy_storage
         state: >
-          {% set maxbat = 5 | float %}
-          {% set currentsoc= 11.0 | float %}
+          {% set maxbat = 5 | float(default=0) %}
+          {% set currentsoc= 11.0 | float(default=0) %}
           {% if has_value('sensor.marstek_1_battery_energy') %}
-            {% set maxbat= (states("sensor.marstek_1_battery_energy") | float * 1024) | round(0) %}
+            {% set maxbat= (states("sensor.marstek_1_battery_energy") | float(default=0) * 1024) | round(0) %}
           {% endif %}
           {% if has_value('sensor.marstek_1_battery_soc') %}
-            {% set currentsoc= states("sensor.marstek_1_battery_soc") | float | round(1) %}
+            {% set currentsoc= states("sensor.marstek_1_battery_soc") | float(default=0) | round(1) %}
           {% endif %}
-          {% set currentbat= (currentsoc | float * (maxbat / 100 )) | int %}
+          {% set currentbat= (currentsoc | float(default=0) * (maxbat / 100 )) | int %}
           {{ currentbat }}
 
 #---------
