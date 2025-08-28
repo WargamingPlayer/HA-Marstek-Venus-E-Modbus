@@ -1,5 +1,5 @@
 # ----------------------
-# Version: 2025.8.5
+# Version: 2025.8.6
 # Note: Only for Marstek EMS 153 or higher
 # By: WargamingPlayer
 # Fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
@@ -1363,8 +1363,8 @@ template:
         unique_id: marstek_3_battery_minimum_soc
         unit_of_measurement: "%"
         state: >
-          {% set sens= states('sensor.marstek_3_capacity_and_power_registers').split(',')[1] | float(default=0)  %}
-          {{ (sens / 10) | round(1) }}
+          {% set sens= states('sensor.marstek_3_capacity_and_power_registers').split(',')[1] | float(default=0) %}
+          {{ ((sens - 1) / 10) | round(1) }}
 
       - name: "Marstek 3 Maximum Charge Power"
         unique_id: marstek_3_max_charge_power

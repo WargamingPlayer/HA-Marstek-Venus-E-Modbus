@@ -2,6 +2,9 @@
 Home Assistant Modbus Interface for Marstek Venus E 
 
 ## Version information
+### Version 2025.8.6
+Marstek x Battery minimum SOC (Discharge) sensor had -1 subtraction fallen of.  
+Fixed Automation in MT 2 and MT 3 files. 
 
 ### Version 2025.8.5
 Fixed Energy based sensors wrong type, measurement to total_increasing.
@@ -15,7 +18,7 @@ Fixed some time values.
 
 ### Version 2025.8.4  
 Changed Battery load values to device_type: energy_storage.  
-Created (liniear) based sensors: Marstek_1_battery_soc_in_Wh.   
+Created (liniear) based sensors: Marstek_x_battery_soc_in_Wh.   
 Removed bug from marstek_venus_totals.yaml where 3rd Marstek is not calculated correct in totals.  
 Rebuid the Effeciency Sensors. Now based on total from the Venus C/E.  
 Added a total efficiency sensor.  

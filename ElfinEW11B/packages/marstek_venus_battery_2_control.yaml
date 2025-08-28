@@ -1,5 +1,5 @@
 # ----------------------
-# Version: 2025.8.5
+# Version: 2025.8.6
 # Note: Only for Marstek EMS 153 or higher
 # By: WargamingPlayer
 # Fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
@@ -1074,7 +1074,7 @@ automation:
               - action: input_number.set_value
                 metadata: {}
                 data:
-                  value: "{{ (states('sensor.marstek_2_capacity_and_power_registers').split(',')[1] | float(default=0) / 10 ) - 1 ) | round(1) }}"
+                  value: "{{ (( states('sensor.marstek_2_capacity_and_power_registers').split(',')[1] | float / 10 ) - 1 ) | round(1) }}"
                 target:
                   entity_id: input_number.marstek_2_set_battery_min_soc
           - conditions:
@@ -1088,7 +1088,7 @@ automation:
                   hub: MarstekVenus1
                   slave: 1
                   address: 44001
-                  value: "{{ ((states('input_number.marstek_2_set_battery_min_soc') | int + 1) | float(default=0) * 10 ) | int | abs }}"
+                  value: "{{ ((( states('input_number.marstek_2_set_battery_min_soc') | int + 1 ) | float ) * 10 ) | int | abs }}"
 
   - id: marstek_2_sync_modbus_and_battery_max_soc
     alias: "Marstek 2 Sync Modbus and Max SOC"
@@ -1114,7 +1114,7 @@ automation:
               - action: input_number.set_value
                 metadata: {}
                 data:
-                  value: "{{ (states('sensor.marstek_2_capacity_and_power_registers').split(',')[0] | float(default=0) / 10) | round(1) }}"
+                  value: "{{ (( states('sensor.marstek_2_capacity_and_power_registers').split(',')[0] | float / 10 ) ) | round(1) }}"
                 target:
                   entity_id: input_number.marstek_2_set_battery_max_soc
           - conditions:
@@ -1128,7 +1128,7 @@ automation:
                   hub: MarstekVenus1
                   slave: 1
                   address: 44000
-                  value: "{{ (states('input_number.marstek_2_set_battery_max_soc') | int | float(default=0) * 10) | int | abs }}"
+                  value: "{{ ((( states('input_number.marstek_2_set_battery_max_soc') | int ) | float ) * 10 ) | int | abs }}"
 
 # ----------------
 # TEMPLATE SENSORS
@@ -1363,8 +1363,8 @@ template:
         unique_id: marstek_2_battery_minimum_soc
         unit_of_measurement: "%"
         state: >
-          {% set sens= states('sensor.marstek_2_capacity_and_power_registers').split(',')[1] | float(default=0)  %}
-          {{ (sens / 10) | round(1) }}
+          {% set sens= states('sensor.marstek_2_capacity_and_power_registers').split(',')[1] | float(default=0) %}
+          {{ ((sens - 1) / 10) | round(1) }}
 
       - name: "Marstek 2 Maximum Charge Power"
         unique_id: marstek_2_max_charge_power
@@ -1476,13 +1476,13 @@ sensor:
 # UTILITY METERS
 # --------------
 utility_meter:
-  daily_discharge_2:
+  daily_discharge_1:
     name: Marstek 2 Daily Discharging in kWh
     unique_id: marstek_2_daily_discharging_in_kwh
     source: sensor.marstek_2_discharging_in_kwh
     cycle: daily
 
-  daily_charge_2:
+  daily_charge_1:
     name: Marstek 2 Daily Charging in kWh
     unique_id: marstek_2_daily_charging_in_kwh
     source: sensor.marstek_2_charging_in_kwh
