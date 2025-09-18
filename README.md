@@ -2,6 +2,9 @@
 Home Assistant Modbus Interface for Marstek Venus E 
 
 ## Version information
+### Version 2025.9.1
+Sensor Marstek x Battery Cell Voltage Delta changed from V to mV.
+
 ### Version 2025.8.6
 Marstek x Battery minimum SOC (Discharge) sensor had -1 subtraction fallen of.  
 Fixed Automation in MT 2 and MT 3 files. 
@@ -265,7 +268,7 @@ The automations sync the input fields.
 | Marstek x Battery minimum SOC (Discharge)               | marstek_x_battery_minimum_soc                | %         |
 | Marstek x Maximum Charge Power                          | marstek_x_max_charge_power                   | W         |
 | Marstek x Maximum Discharge Power                       | marstek_x_max_discharge_power                | W         |
-| Marstek x Battery Cell Voltage Delta                    | marstek_x_battery_cell_voltage_delta         | V         |
+| Marstek x Battery Cell Voltage Delta                    | marstek_x_battery_cell_voltage_delta         | mV        |
 | Marstek x Efficiency Percentage                         | marstek_x_efficiency_percentage              | %         |
 | Marstek x Battery SOC in Wh                             | marstek_x_battery_soc_in_Wh                  | Wh        |
 

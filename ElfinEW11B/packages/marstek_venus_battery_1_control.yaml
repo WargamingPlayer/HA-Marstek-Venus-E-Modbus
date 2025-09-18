@@ -1,5 +1,5 @@
 # ----------------------
-# Version: 2025.8.6
+# Version: 2025.9.1
 # Note: Only for Marstek EMS 153 or higher
 # By: WargamingPlayer
 # Fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
@@ -26,8 +26,8 @@ modbus:
       # 30005 = 32100
       # 30006 = 32300
       # 30007
-      # 30008 = 35001
-      # 30009 = 35002
+      # 30008 = 35001 Only V1 & V2
+      # 30009 = 35002 Only V1 & V2
       # 30010 = 35000
       # 30100 = 36100
       # 30200
@@ -81,10 +81,22 @@ modbus:
         offset: 0
         precision: 0
 
+      # Only V3
+      #- name: "Marstek 1 MAC"
+      #  unique_id: marstek_1_mac
+      #  address: 30304
+      #  slave: 1
+      #  scan_interval: 300
+      #  input_type: holding
+      #  data_type: custom
+      #  count: 6
+      #  structure: ">12s"        
+
       # 30399 = 31102 (in hex)
       # 30400 = 31100 (in hex)
       # 30401 = 31101 (in hex)
 
+      # Only V1 & V2
       - name: "Marstek 1 MAC"
         unique_id: marstek_1_mac
         address: 30402
@@ -95,10 +107,21 @@ modbus:
         count: 6
         structure: ">12s"
 
+      # Only V3
+      #- name: "Marstek 1 COM Module version"
+      #  unique_id: marstek_1_com_module_version
+      #  address: 30350
+      #  slave: 1
+      #  scan_interval: 300
+      #  input_type: holding
+      #  data_type: custom
+      #  count: 6
+
       # 30500
       # 30600
       # 30700
 
+      # Only V1 & V2
       - name: "Marstek 1 COM Module version"
         unique_id: marstek_1_com_module_version
         address: 30800
@@ -584,6 +607,7 @@ modbus:
       # 41100 = Modbus address, always 1, we do nothing with this
       # 41200 = Backup function, see switches, we implemented it
 
+      # Only V1 & V2
       - name: "Marstek 1 WiFi SSID"
         unique_id: marstek_1_wifi_ssid
         address: 41500
@@ -594,6 +618,7 @@ modbus:
         count: 16
         structure: ">32s"
 
+      # Only V1 & V2
       # 41516 Last 2 chars of Wifi Password, we do not implement
       - name: "Marstek 1 RS485 Control Mode"
         unique_id: marstek_1_rs485_control_mode
@@ -1384,13 +1409,13 @@ template:
 
       - name: "Marstek 1 Battery Cell Voltage Delta"
         unique_id: marstek_1_battery_cell_voltage_delta
-        unit_of_measurement: "V"
+        unit_of_measurement: "mV"
         device_class: voltage
         state_class: measurement
         state: >
-          {% set sens1= states('sensor.marstek_1_battery_maximum_cell_voltage') | round(3) | float(default=0) %}
-          {% set sens2= states('sensor.marstek_1_battery_minimum_cell_voltage') | round(3) | float(default=0) %}
-          {{ (sens1 - sens2) | round(3) | float(default=0) }}
+          {% set sens1= states('sensor.marstek_1_battery_maximum_cell_voltage') | float(default=0) * 1000 %}
+          {% set sens2= states('sensor.marstek_1_battery_minimum_cell_voltage') | float(default=0) * 1000 %}
+          {{ (sens1 - sens2) | round(0) }}
 
       # Expiremental
       # Calculation does not add up as it should, Tweakers is not correct on this.
