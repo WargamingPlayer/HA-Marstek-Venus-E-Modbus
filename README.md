@@ -1,15 +1,32 @@
 # HA Marstek Venus E Modbus
-Home Assistant Modbus Interface for Marstek Venus E 
+
+Home Assistant Modbus Interface for Marstek Venus E
 
 ## Version information
+
+### Version 2025.11.1
+
+This version adds a lot of scripts and sensors.  
+It also fixes some automations and scripts, where the scripts and automations of device 2 & 3 did not work properly.  
+For the information on the new additions see the section #Manual Schedules#
+
+### Version 2025.10.1
+
+RTE Sensor to 2 digits.  
+RTE Monthy stats added.  
+Added 6 Schedules for Manual Mode.
+
 ### Version 2025.9.1
+
 Sensor Marstek x Battery Cell Voltage Delta changed from V to mV.
 
 ### Version 2025.8.6
+
 Marstek x Battery minimum SOC (Discharge) sensor had -1 subtraction fallen of.  
-Fixed Automation in MT 2 and MT 3 files. 
+Fixed Automation in MT 2 and MT 3 files.
 
 ### Version 2025.8.5
+
 Fixed Energy based sensors wrong type, measurement to total_increasing.
 Fixed devide by 0 bug.  
 Fixed Float default values to default=0 or default=1.  
@@ -17,24 +34,28 @@ Fixed automation bug where int was used instead of float.
 Fixed efficiency sensor devision by 0.  
 Fixed misalligned () causing values not be correct.  
 Splited single line of code for some sensors to multiple lines to improve readability.  
-Fixed some time values.  
+Fixed some time values.
 
-### Version 2025.8.4  
+### Version 2025.8.4
+
 Changed Battery load values to device_type: energy_storage.  
-Created (liniear) based sensors: Marstek_x_battery_soc_in_Wh.   
+Created (liniear) based sensors: Marstek_x_battery_soc_in_Wh.  
 Removed bug from marstek_venus_totals.yaml where 3rd Marstek is not calculated correct in totals.  
 Rebuid the Effeciency Sensors. Now based on total from the Venus C/E.  
 Added a total efficiency sensor.  
-Reformatted the yaml files.  
+Reformatted the yaml files.
 
-### Version 2025.8.3  
-Registers 33000 - 33010 added.  
+### Version 2025.8.3
 
-### Version 2025.8.2  
+Registers 33000 - 33010 added.
+
+### Version 2025.8.2
+
 Sensors min/max Cell temperature now correct.  
-Efficency percentage is all over the place. Need to find out how to make this working.  
+Efficency percentage is all over the place. Need to find out how to make this working.
 
-### Version 2025.8.1  
+### Version 2025.8.1
+
 Added Sensors, fixed some bugs.  
 MAC now displayed as string.  
 Software version added.  
@@ -43,56 +64,65 @@ BMS version added.
 Adjusted temp sensors to BMS 215, 213 had scale issue.  
 Inverter state 6 added.  
 Grid standard added.  
-Power restriction switch removed, added value only.   
+Power restriction switch removed, added value only.  
 Efficiency added.  
-WiFi strength is now -dBm.  
+WiFi strength is now -dBm.
 
-### Version 0.0.5  
+### Version 0.0.5
+
 Added sensors, fixed some scale bugs.
 
 ### Version 0.0.4
-This version contains now 3 files for the Marstek E Venus Modbus integration of 3 Marsteks. 
-This version also contains a couple of termplates for consolidating values when using the "Power Flow Card Plus card".  
 
-### Version 0.0.3  
-Added automations.  
-  
-### Version 0.0.2  
+This version contains now 3 files for the Marstek E Venus Modbus integration of 3 Marsteks.
+This version also contains a couple of termplates for consolidating values when using the "Power Flow Card Plus card".
+
+### Version 0.0.3
+
+Added automations.
+
+### Version 0.0.2
+
 Bug fixes
-  
-### Version 0.0.1  
-First version, fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11  
+
+### Version 0.0.1
+
+First version, fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
 
 ## Folders:
-  [root]\
-    EW11B   - Elfin EW11B\
-      packages - Home Assistant packages\
+
+[root]\
+ EW11B - Elfin EW11B\
+ packages - Home Assistant packages\
 
 ## More information:
-More information: https://gathering.tweakers.net/forum/list_messages/2282240  
-Pascallj Modbus: https://docs.google.com/spreadsheets/d/e/2PACX-1vSyu0LKoSrQQzvrosMH-sOcSKT7pgHSXEwAcIJe0cy3NCrmwiLH6VDGjh0_2HOKhL0nZmnI3Mk5Fb_d/pubhtml?gid=319238506&single=true  
 
+More information: https://gathering.tweakers.net/forum/list_messages/2282240  
+Pascallj Modbus: https://docs.google.com/spreadsheets/d/e/2PACX-1vSyu0LKoSrQQzvrosMH-sOcSKT7pgHSXEwAcIJe0cy3NCrmwiLH6VDGjh0_2HOKhL0nZmnI3Mk5Fb_d/pubhtml?gid=319238506&single=true
 
 ## Disclaimer:
-  The Home Assistant files from the packages folder is based on from @github/Superduper1969  
-  https://github.com/Superduper1969/MarstekVenus-ElfinEW11  
 
+The Home Assistant files from the packages folder is based on from @github/Superduper1969  
+ https://github.com/Superduper1969/MarstekVenus-ElfinEW11
 
-# Installation: 
-  ## Marstek V2 Modbus cable to Elfin EW11B
-  | Pin | Color  | EW11 Pin | Signal |
-  |-----|--------|----------|--------|
-  | 1   | Yellow | 1        | A      |
-  | 2   | Red    | 4        | B      |
-  | 3   | Black  | 3        | GND    |
-  | 4   | -      | -        | -      |
-  | 5   | Black  | 2        | VCC    |
-  | 6   | Red    | -        | -      |
-  
-  ## Elfin EW11B:
-    https://nl.aliexpress.com/item/32916128353.html  
-    Note: Use the Wide range Voltage version.  
-  
+# Installation:
+
+## Marstek V2 Modbus cable to Elfin EW11B
+
+| Pin | Color  | EW11 Pin | Signal |
+| --- | ------ | -------- | ------ |
+| 1   | Yellow | 1        | A      |
+| 2   | Red    | 4        | B      |
+| 3   | Black  | 3        | GND    |
+| 4   | -      | -        | -      |
+| 5   | Black  | 2        | VCC    |
+| 6   | Red    | -        | -      |
+
+## Elfin EW11B:
+
+    https://nl.aliexpress.com/item/32916128353.html
+    Note: Use the Wide range Voltage version.
+
     Serial Port parameters on Elfin EW11B:
         Baud Rate = 115200
         Data Bit = 8
@@ -113,13 +143,14 @@ Pascallj Modbus: https://docs.google.com/spreadsheets/d/e/2PACX-1vSyu0LKoSrQQzvr
         Security = Disable
         Route = Uart
 
-  ## Installation of Elfin EW11B packages for Home Assistant:
+## Installation of Elfin EW11B packages for Home Assistant:
+
     1.  Create the connector for your Marstek Venus E.
         Note: Beware of the Wiring schema.
     2.  Connect the Elfin to the Marstek Venus E Modbus connector, it will power up.
     3.  Confiugure the network settings of the Elfin. Preferable a fixed IP address. http://www.hi-flying.com/elfin-ew10-elfin-ew11
-        Note: Choose STA as settings  
-        Note: The Public IP address is the address what is in your Wifi network.  
+        Note: Choose STA as settings
+        Note: The Public IP address is the address what is in your Wifi network.
     4.  Configure Serial Port (see above)
     5.  Configure Communication settings (see above)
     6.  Reboot the Elfin.
@@ -127,20 +158,22 @@ Pascallj Modbus: https://docs.google.com/spreadsheets/d/e/2PACX-1vSyu0LKoSrQQzvr
     8.  Create a folder packages in the root (where your configuration.yaml is).
     9.  Now open configuration.yaml.
     10. Find the section "homeassistant:".
-    11. Add the following text (without the quotes): "  packages !include_dir_named packages"  
+    11. Add the following text (without the quotes): "  packages !include_dir_named packages"
         Note: Watch the two spaces before packages, these MUST be included.
-    12. Now upload the neede files from Github EW11B/packages folder to the packages folder in Home Assistant. 
-        Note: If you have 1 Venus, just use the marstek_venus_battery_1_control.yaml, if you have 2, use also the marstek_venus_battery_2_control.yaml  
+    12. Now upload the neede files from Github EW11B/packages folder to the packages folder in Home Assistant.
+        Note: If you have 1 Venus, just use the marstek_venus_battery_1_control.yaml, if you have 2, use also the marstek_venus_battery_2_control.yaml
     13. Update the yaml file(s) by editing the IP addresses (see below).
     14. Copy the marstek_venus_totals.yaml also to the packages folder.
     15. Restart HA.
 
-  ## Configure the yaml files:
+## Configure the yaml files:
+
     1.  Open the file in Home Assistant with file editor.
     2.  Find [YourIPGoesHere] in the top of the file.
     3.  Replace it with the IP address of the Elfin.
 
-  ## Help I have 4 or more Marsteks:
+## Help I have 4 or more Marsteks:
+
     1.  Make a copy of the file marstek_venus_battery_1_control.yaml
     2.  Rename the copy to marstek_venus_battery_n_control.yaml where n= The Marstek you want to add (4, 5, 6)
     3.  Open the new file in an editor.
@@ -148,157 +181,212 @@ Pascallj Modbus: https://docs.google.com/spreadsheets/d/e/2PACX-1vSyu0LKoSrQQzvr
     5.  Replace the text "marstek_1" to "marstek_n" where n is the same as in line 2.
     6.  Replace the _1 at the bottom of the files at daily_charge and daily_discharge.
 
-# Marstek Modbus reference
-## Individual Marstek Venus
-### Sensors per Marstek
-| Name                                | id                                    | type                | data           |
-|-------------------------------------|---------------------------------------|---------------------|----------------|
-| Marstek x Com Module version        | marstek_x_com_module_version          | string              | 12 characters  |
-| Marstek x Name                      | marstek_x_name                        | custom(10)          | 20 characters  |
-| Marstek x Software version          | marstek_x_software version            | unint(16)           | xx.y           |
-| Marstek x EMS version               | marstek_x_software version            | unint(16)           | xxx            |
-| Marstek x BMS version               | marstek_x_software version            | unint(16)           | xxx            |
-| Marstek x Wifi SSID                 | marstek_x_wifi_ssid                   | custom(16)          | 32 characters  |
-| Marstek x MAC                       | marstek_x_mac                         | custom(6)           | 12 bytes       |
-| Marstek x Wifi Status               | marstek_x_wifi_status                 | unint(16)           |                |
-| Marstek x BT Status                 | marstek_x_bt_status                   | unint(16)           |                |
-| Marstek x Cloud Status              | marstek_x_cloud_status                | unint(16)           |                |
-| Marstek x Wifi Signal Strength      | marstek_x_wifi_signal_strength        | unint(16)           | -dBm           |
-| Marstek x Battery Voltage           | marstek_x_battery_voltage             | unint(16)           | V              |
-| Marstek x Battery Current           | marstek_x_battery_current             | int(16)             | W              | 
-| Marstek x Battery Power             | marstek_x_battery_power               | int(32)             | W              | 
-| Marstek x Battery SOC               | marstek_x_battery_soc                 | unint(16)           | % (battery)    |
-| Marstek x Battery Energy            | marstek_x_battery_energy              | unint(16)           | kWh            |
-| Marstek x AC Voltage                | marstek_x_ac_voltage                  | unint(16)           | V              |
-| Marstek x AC Current                | marstek_x_ac_current                  | unint(16)           | A              |
-| Marstek x AC Power                  | marstek_x_ac_power                    | int(32)             | W              |
-| Marstek x AC Frequency              | marstek_x_ac_frequency                | unint(16)           | Hz             |
-| Marstek x AC Offgrid Voltage        | marstek_x_ac_offgrid_voltage          | unint(16)           | V              |
-| Marstek x AC Offgrid Current        | marstek_x_ac_offgrid_current          | int(16)             | A              |
-| Marstek x AC Offgrid Power          | marstek_x_ac_offgrid_power            | int(32)             | W              |
-| Marstek x Total Charging Energy     | marstek_x_total_charging_energy       | unint(32)           | kWh            |
-| Marstek x Total Discharging Energy  | marstek_x_total_discharging_energy    | unint(32)           | kWh            |
-| Marstek x Daily Charging Energy     | marstek_x_daily_charging_energy       | unint(32)           | kWh            |
-| Marstek x Daily Discharging Energy  | marstek_x_daily_discharging_energy    | unint(32)           | kWh            |
-| Marstek x Monthly Charging Energy   | marstek_x_monthly_charging_energy     | unint(32)           | kWh            |
-| Marstek x Monthly Discharging Energy| marstek_x_monthly_discharging_energy  | unint(32)           | kWh            |
-| Marstek x Internal Temperature      | marstek_x_internal_temperature        | int(16)             | °C             |
-| Marstek x Internal MOS1 Temperature | marstek_x_internal_mos1_temperature   | int(16)             | °C             |
-| Marstek x Internal MOS2 Temperature | marstek_x_internal_mos2_temperature   | int(16)             | °C             |
-| Marstek x Max Cell Temperature      | marstek_x_max_cell_temperature        | int(16)             | °C             |
-| Marstek x Min Cell Temperature      | marstek_x_min_cell_temperature        | int(16)             | °C             |
-| Marstek x Inverter State            | marstek_x_inverter_state              | int(16)             |                |
-| Marstek x Battery Charge Limits     | marstek_x_battery_charge_limits       | custom(3) uint(16)  | array          |
-| Marstek x Battery Maximum Cell V... | marstek_x_battery_maximum_cell_vol..  | float               | x.yyyV         |
-| Marstek x Battery Minimum Cell V... | marstek_x_battery_minimum_cell_vol..  | float               | x.yyyV         |
-| Marstek x RS485 Control Mode        | marstek_x_rs485_control_mode          | uint(16)            |                |
-| Marstek x Force Charge/Discharge M  | marstek_x_force_charge_discharge_mode | uint(16)            |                |
-| Marstek x Charge to SOC             | marstek_x_charge_to_soc               | uint(16)            | %              |
-| Marstek x Forcible Charge Power     | marstek_x_forcible_charge_power       | uint(16)            | W              |
-| Marstek x Forcible Discharge Power  | marstek_3_forcible_discharge_power    | uint(16)            | W              |
-| Marstek x User Work Mode            | marstek_x_user_work_mode              | uint(16)            |                |
-| Marstek x Capacity and Power reg..  | marstek_x_capacity_and_power_registers| custom(4) uint(16)  | array          |
-| Marstek x Alarm State               | marstek_x_alarm_state                 | custom(2) uint(16)  | array          |
-| Marstek x Fault State               | marstek_x_fault_state                 | custom(4) uint(16)  | array          |
-| Marstek x Discharging in kWh        | marstek_x_discharging_in_kwh          | uint                | kWh            |
-| Marstek x Charging in kWh           | marstek_x_charging_in_kwh             | uint                | kWh            |
-| Marstek x Power Limit 800W          | marstek_x_power_limit_800w            | uint                | 0=yes, 1=no    |
-| Marstek x Grid standard             | marstek_x_grid_standard               | uint                | x              | 
+# Manual Schedules
+From version 2025.11.1 the Marstek now supports schedules. It can read and write schedules. 
+It works together wit the Modbus sensors marstek_x_manual_schedule_1 ... marstek_x_manual_schedule_6 which are arrays. 
 
+Every schedule has the following fields:
+Marstek x Manual Schedule x Power : This is the power setting, a negative value = charge, a positive value is discharge.  
+Marstek x Manual Schedule x [DoW]: These 7 booleans are representing day of the schedule.  
+Marstek x Manual Schedule x Start: Start time in hh:mm notation.  
+Marstek x Manual Schedule x End: End time in hh:mm notation.
+
+It is the responsibility of the user not to overlap schedules and let start and stop times be in the right order.  
+This package does not do error or sanity checking.  
+
+To write the values to the register, use input_button: Marstek x Schedule x set
+
+Please note, if a schedule is changed in the App, the fields are updated from the Venus.
+
+# Marstek Modbus reference
+
+## Individual Marstek Venus
+
+### Sensors per Marstek
+
+| Name                                 | id                                     | type               | data          |
+| ------------------------------------ | -------------------------------------- | ------------------ | ------------- |
+| Marstek x Com Module version         | marstek_x_com_module_version           | string             | 12 characters |
+| Marstek x Name                       | marstek_x_name                         | custom(10)         | 20 characters |
+| Marstek x Software version           | marstek_x_software version             | unint(16)          | xx.y          |
+| Marstek x EMS version                | marstek_x_software version             | unint(16)          | xxx           |
+| Marstek x BMS version                | marstek_x_software version             | unint(16)          | xxx           |
+| Marstek x Wifi SSID                  | marstek_x_wifi_ssid                    | custom(16)         | 32 characters |
+| Marstek x MAC                        | marstek_x_mac                          | custom(6)          | 12 bytes      |
+| Marstek x Wifi Status                | marstek_x_wifi_status                  | unint(16)          |               |
+| Marstek x BT Status                  | marstek_x_bt_status                    | unint(16)          |               |
+| Marstek x Cloud Status               | marstek_x_cloud_status                 | unint(16)          |               |
+| Marstek x Wifi Signal Strength       | marstek_x_wifi_signal_strength         | unint(16)          | -dBm          |
+| Marstek x Battery Voltage            | marstek_x_battery_voltage              | unint(16)          | V             |
+| Marstek x Battery Current            | marstek_x_battery_current              | int(16)            | W             |
+| Marstek x Battery Power              | marstek_x_battery_power                | int(32)            | W             |
+| Marstek x Battery SOC                | marstek_x_battery_soc                  | unint(16)          | % (battery)   |
+| Marstek x Battery Energy             | marstek_x_battery_energy               | unint(16)          | kWh           |
+| Marstek x AC Voltage                 | marstek_x_ac_voltage                   | unint(16)          | V             |
+| Marstek x AC Current                 | marstek_x_ac_current                   | unint(16)          | A             |
+| Marstek x AC Power                   | marstek_x_ac_power                     | int(32)            | W             |
+| Marstek x AC Frequency               | marstek_x_ac_frequency                 | unint(16)          | Hz            |
+| Marstek x AC Offgrid Voltage         | marstek_x_ac_offgrid_voltage           | unint(16)          | V             |
+| Marstek x AC Offgrid Current         | marstek_x_ac_offgrid_current           | int(16)            | A             |
+| Marstek x AC Offgrid Power           | marstek_x_ac_offgrid_power             | int(32)            | W             |
+| Marstek x Total Charging Energy      | marstek_x_total_charging_energy        | unint(32)          | kWh           |
+| Marstek x Total Discharging Energy   | marstek_x_total_discharging_energy     | unint(32)          | kWh           |
+| Marstek x Daily Charging Energy      | marstek_x_daily_charging_energy        | unint(32)          | kWh           |
+| Marstek x Daily Discharging Energy   | marstek_x_daily_discharging_energy     | unint(32)          | kWh           |
+| Marstek x Monthly Charging Energy    | marstek_x_monthly_charging_energy      | unint(32)          | kWh           |
+| Marstek x Monthly Discharging Energy | marstek_x_monthly_discharging_energy   | unint(32)          | kWh           |
+| Marstek x Internal Temperature       | marstek_x_internal_temperature         | int(16)            | °C            |
+| Marstek x Internal MOS1 Temperature  | marstek_x_internal_mos1_temperature    | int(16)            | °C            |
+| Marstek x Internal MOS2 Temperature  | marstek_x_internal_mos2_temperature    | int(16)            | °C            |
+| Marstek x Max Cell Temperature       | marstek_x_max_cell_temperature         | int(16)            | °C            |
+| Marstek x Min Cell Temperature       | marstek_x_min_cell_temperature         | int(16)            | °C            |
+| Marstek x Inverter State             | marstek_x_inverter_state               | int(16)            |               |
+| Marstek x Battery Charge Limits      | marstek_x_battery_charge_limits        | custom(3) uint(16) | array         |
+| Marstek x Battery Maximum Cell V...  | marstek_x_battery_maximum_cell_vol..   | float              | x.yyyV        |
+| Marstek x Battery Minimum Cell V...  | marstek_x_battery_minimum_cell_vol..   | float              | x.yyyV        |
+| Marstek x RS485 Control Mode         | marstek_x_rs485_control_mode           | uint(16)           |               |
+| Marstek x Force Charge/Discharge M   | marstek_x_force_charge_discharge_mode  | uint(16)           |               |
+| Marstek x Charge to SOC              | marstek_x_charge_to_soc                | uint(16)           | %             |
+| Marstek x Forcible Charge Power      | marstek_x_forcible_charge_power        | uint(16)           | W             |
+| Marstek x Forcible Discharge Power   | marstek_3_forcible_discharge_power     | uint(16)           | W             |
+| Marstek x User Work Mode             | marstek_x_user_work_mode               | uint(16)           |               |
+| Marstek x Capacity and Power reg..   | marstek_x_capacity_and_power_registers | custom(4) uint(16) | array         |
+| Marstek x Alarm State                | marstek_x_alarm_state                  | custom(2) uint(16) | array         |
+| Marstek x Fault State                | marstek_x_fault_state                  | custom(4) uint(16) | array         |
+| Marstek x Discharging in kWh         | marstek_x_discharging_in_kwh           | uint               | kWh           |
+| Marstek x Charging in kWh            | marstek_x_charging_in_kwh              | uint               | kWh           |
+| Marstek x Power Limit 800W           | marstek_x_power_limit_800w             | uint               | 0=yes, 1=no   |
+| Marstek x Grid standard              | marstek_x_grid_standard                | uint               | x             |
+| Marstek x Manual Schedule 1          | marstek_x_manual_schedule_1            | custom(5)          | array         |
+| Marstek x Manual Schedule 2          | marstek_x_manual_schedule_2            | custom(5)          | array         |
+| Marstek x Manual Schedule 3          | marstek_x_manual_schedule_2            | custom(5)          | array         |
+| Marstek x Manual Schedule 4          | marstek_x_manual_schedule_2            | custom(5)          | array         |
+| Marstek x Manual Schedule 5          | marstek_x_manual_schedule_2            | custom(5)          | array         |
+| Marstek x Manual Schedule 6          | marstek_x_manual_schedule_2            | custom(5)          | array         |
 
 ### Switches
-| Name                                | id                                    | on                  | off            |
-|-------------------------------------|---------------------------------------|---------------------|----------------|
-| Marstek x Device Reset**            | marstek_x_device_reset                | 0x55AA              | 0              |
-| Marstek x Factory Reset**           | marstek_x_factory_reset               | 0x55AA              | 0              |
-| Marstek x Backup Enabled***         | marstek_x_backup_enabled              | 0                   | 1              |
+
+| Name                           | id                       | on     | off |
+| ------------------------------ | ------------------------ | ------ | --- |
+| Marstek x Device Reset\*\*     | marstek_x_device_reset   | 0x55AA | 0   |
+| Marstek x Factory Reset\*\*    | marstek_x_factory_reset  | 0x55AA | 0   |
+| Marstek x Backup Enabled\*\*\* | marstek_x_backup_enabled | 0      | 1   |
+
 ** Experimental  
-*** This switch reverses the modbus reading  
-  
+\*** This switch reverses the modbus reading
+
 ### Input numbers & Input select
+
 These numbers are adjusted by the state of the Venus. And also adjust the state of the Venus when changed. This is done  
 by the automations inside the yaml.  
-| Name                                | id                                    | min    | max    | step   | mode      |
+
+| Name | id | min | max | step | mode |
 |-------------------------------------|---------------------------------------|--------|--------|--------|-----------|
-| Marstek x (dis)charging power**     | marstek_x_discharging_charging_power  | -2500  | 2500   | 50     | slider    |
-| Marstek x Set maximum discharging.. | marstek_x_set_max_discharging_power   | 50     | 2500   | 10     | box       |
-| Marstek x Set maximum charging po.. | marstek_x_set_max_charging_power      | 50     | 2500   | 50     | box       |
-| Marstek x Set Battery minimum SOC.. | marstek_x_set_battery_min_soc         | 11     | 25     | 0.1    | box       |
-| Marstek x Set Battery maximum SOC.. | marstek_x_set_battery_max_soc         | 75     | 100    | 0.1    | box       |
-| Marstek x User Work Mode            | marstek_x_user_work_mode_input_select | -      | -      | -      | select    |
-  
-** Avoid using, might be removed and then will break your dashboard.  
+| Marstek x (dis)charging power | marstek_x_discharging_charging_power | -2500 | 2500 | 50 | slider |
+| Marstek x Set maximum discharging.. | marstek_x_set_max_discharging_power | 50 | 2500 | 10 | box |
+| Marstek x Set maximum charging po.. | marstek_x_set_max_charging_power | 50 | 2500 | 50 | box |
+| Marstek x Set Battery minimum SOC.. | marstek_x_set_battery_min_soc | 11 | 25 | 0.1 | box |
+| Marstek x Set Battery maximum SOC.. | marstek_x_set_battery_max_soc | 75 | 100 | 0.1 | box |
+| Marstek x User Work Mode | marstek_x_user_work_mode_input_select | - | - | - | select |
+| Marstek x Manual Schedule x Power | marstek_x_manual_schedule_x_power | -2500 | 2500 | 10 | slider |
+| Marstek x Manual Schedule x <DoW> | marstek_x_manual_schedule_x_sched... | off | on | - | button |
+| Marstek x Manual Schedule x Start.. | marstek_x_manual_schedule_x_sched... | 00:00 | 23:59 | 00:00 | time |
+| Marstek x Manual Schedule x End.. | marstek_x_manual_schedule_x_sched... | 00:00 | 23:59 | 00:00 | time |
+
+There is no check if start and end time are wrongly.
+
+The following input_button is introduced.
+marstek_x_manual_schedule_x_set, which triggers the automation to set the schedule.
+
 ### Scripts
-| id                                  | Description                                                                  |
-|-------------------------------------|------------------------------------------------------------------------------|
-| marstek_x_set_forcible_charge       | Executed this script will set the Marstek to the action defined by           |
-|                                     | marstek_x_discharging_charging_power                                         |
+
+| id                                   | Description                                                             |
+| ------------------------------------ | ----------------------------------------------------------------------- |
+| marstek_x_set_forcible_charge        | Executed this script will set the Marstek to the action defined by      |
+|                                      | marstek_x_discharging_charging_power                                    |
+| marstek_x_read_write_modbus_schedule | Reads or writes the Marstek Venus manual schedule into/from the fields  |
+|                                      | accepts two parameters: marstek_register and marstek_action             |
+|                                      | - marstek_action: read or write                                         |
+|                                      | - marstek*register: schedule_1 ... schedule_6 (requires word schedule*) |
 
 ### Automations
-| id                                     | Alias                                    | Description                    |
-|----------------------------------------|------------------------------------------|--------------------------------|
-| marstek_x_sync_modbus_and_input_select | Marstek x Sync Modbus and Input Select   | Synchronizes User Mode with    |
-|                                        |                                          | input_select. Beware that it   |
-|                                        |                                          | just sets Trade or Manual      |
-| marstek_x_sync_modbus_and_max_charge   | Marstek x Sync Modbus and Maximum Charge | syncs max with Venus           |
-| marstek_x_sync_modbus_and_max_discha.. | Marstek x Sync Modbus and Maximum Dis..  | syncs max with Venus           |
-| marstek_x_sync_modbus_and_ba.._min_soc | Marstek x Sync Modbus and Min SOC        | syncs min with Venus           |
-| marstek_x_sync_modbus_and_ba.._max_soc | Marstek x Sync Modbus and Max SOC"       | syncs max with Venus           |
-The automations sync the input fields.  
+
+| id                                      | Alias                                    | Description                  |
+| --------------------------------------- | ---------------------------------------- | ---------------------------- |
+| marstek_x_sync_modbus_and_input_select  | Marstek x Sync Modbus and Input Select   | Synchronizes User Mode with  |
+|                                         |                                          | input_select. Beware that it |
+|                                         |                                          | just sets Trade or Manual    |
+| marstek_x_sync_modbus_and_max_charge    | Marstek x Sync Modbus and Maximum Charge | syncs max with Venus         |
+| marstek_x_sync_modbus_and_max_discha..  | Marstek x Sync Modbus and Maximum Dis..  | syncs max with Venus         |
+| marstek_x_sync_modbus_and_ba..\_min_soc | Marstek x Sync Modbus and Min SOC        | syncs min with Venus         |
+| marstek_x_sync_modbus_and_ba..\_max_soc | Marstek x Sync Modbus and Max SOC        | syncs max with Venus         |
+| Marstek_x_sync_modbus_with_schedule_x   | Marstek x Sync Modbus with Schedule x    | Syncs schedule with Venus    |
+
+The automations sync the input fields.
 
 ### Template sensors
-| Name                                                    | id                                           | value     |
-|---------------------------------------------------------|----------------------------------------------|-----------|
-| Marstek x Charging in W                                 | marstek_x_charging_in_w                      | W         |
-| Marstek x Discharging in W                              | marstek_x_discharging_in_w                   | W         |
-| Marstek x Force Charge/Discharge Mode Status            | marstek_x_force_charge_discharge_mode_status | string    |
-| Marstek x RS485 Control Mode Status                     | marstek_x_rs485_control_mode_status          | string    |
-| Marstek x State                                         | marstek_x_state                              | string    |
-| Marstek x Operational mode                              | marstek_x_operational mode                   | string    |
-| Marstek x Alarm PLL Abnormal Restart                    | marstek_x_alarm_PLL_abnormal_restart         | 0,1       |
-| Marstek x Alarm Fan Abnormal Warning                    | marstek_x_alarm_fan_abnormal_warning         | 0,1       |
-| Marstek x Alarm Low Battery SOC Warning                 | marstek_x_alarm_low_battery_SOC_warning      | 0,1       |
-| Marstek x Alarm Output Overcurrent Warning              | marstek_x_alarm_output_overcurrent_warning   | 0,1       |
-| Marstek x Alarm Abnormal Line Sequence Detection        | marstek_x_alarm_abnormal_line_sequence_..    | 0,1       |
-| Marstek x Alarm WIFI abnormal                           | marstek_x_alarm_wifi_abnormal                | 0,1       |
-| Marstek x Alarm Blutooth abnormal                       | marstek_x_alarm_blutooth_abnormal            | 0,1       |
-| Marstek x Alarm Network abnormal                        | marstek_x_alarm_network_abnormal             | 0,1       |
-| Marstek x Alarm CT connection abnormal                  | marstek_x_alarm_ct_connection_abnormal       | 0,1       |
-| Marstek x Battery maximum SOC (Charge)                  | marstek_x_battery_maximum_soc                | %         |
-| Marstek x Battery minimum SOC (Discharge)               | marstek_x_battery_minimum_soc                | %         |
-| Marstek x Maximum Charge Power                          | marstek_x_max_charge_power                   | W         |
-| Marstek x Maximum Discharge Power                       | marstek_x_max_discharge_power                | W         |
-| Marstek x Battery Cell Voltage Delta                    | marstek_x_battery_cell_voltage_delta         | mV        |
-| Marstek x Efficiency Percentage                         | marstek_x_efficiency_percentage              | %         |
-| Marstek x Battery SOC in Wh                             | marstek_x_battery_soc_in_Wh                  | Wh        |
+
+| Name                                             | id                                           | value  |
+| ------------------------------------------------ | -------------------------------------------- | ------ |
+| Marstek x Charging in W                          | marstek_x_charging_in_w                      | W      |
+| Marstek x Discharging in W                       | marstek_x_discharging_in_w                   | W      |
+| Marstek x Force Charge/Discharge Mode Status     | marstek_x_force_charge_discharge_mode_status | string |
+| Marstek x RS485 Control Mode Status              | marstek_x_rs485_control_mode_status          | string |
+| Marstek x State                                  | marstek_x_state                              | string |
+| Marstek x Operational mode                       | marstek_x_operational mode                   | string |
+| Marstek x Alarm PLL Abnormal Restart             | marstek_x_alarm_PLL_abnormal_restart         | 0,1    |
+| Marstek x Alarm Fan Abnormal Warning             | marstek_x_alarm_fan_abnormal_warning         | 0,1    |
+| Marstek x Alarm Low Battery SOC Warning          | marstek_x_alarm_low_battery_SOC_warning      | 0,1    |
+| Marstek x Alarm Output Overcurrent Warning       | marstek_x_alarm_output_overcurrent_warning   | 0,1    |
+| Marstek x Alarm Abnormal Line Sequence Detection | marstek*x_alarm_abnormal_line_sequence*..    | 0,1    |
+| Marstek x Alarm WIFI abnormal                    | marstek_x_alarm_wifi_abnormal                | 0,1    |
+| Marstek x Alarm Blutooth abnormal                | marstek_x_alarm_blutooth_abnormal            | 0,1    |
+| Marstek x Alarm Network abnormal                 | marstek_x_alarm_network_abnormal             | 0,1    |
+| Marstek x Alarm CT connection abnormal           | marstek_x_alarm_ct_connection_abnormal       | 0,1    |
+| Marstek x Battery maximum SOC (Charge)           | marstek_x_battery_maximum_soc                | %      |
+| Marstek x Battery minimum SOC (Discharge)        | marstek_x_battery_minimum_soc                | %      |
+| Marstek x Maximum Charge Power                   | marstek_x_max_charge_power                   | W      |
+| Marstek x Maximum Discharge Power                | marstek_x_max_discharge_power                | W      |
+| Marstek x Battery Cell Voltage Delta             | marstek_x_battery_cell_voltage_delta         | mV     |
+| Marstek x Efficiency Percentage                  | marstek_x_efficiency_percentage              | 0,01%  |
+| Marstek x Efficiency Percentage (Monthly)        | marstek_x_efficiency_percentage_monthly      | 0,01%  |
+| Marstek x Battery SOC in Wh                      | marstek_x_battery_soc_in_Wh                  | Wh     |
 
 ### Utility meters
-| Name                                                    | id                                           | Interval  |
-|---------------------------------------------------------|----------------------------------------------|-----------|
-| Marstek x Daily Discharging in kWh                      | marstek_x_daily_discharging_in_kwh           | daily     |
-| Marstek x Daily Charging in kWh                         | marstek_x_daily_charging_in_kwh              | daily     |
+
+| Name                               | id                                 | Interval |
+| ---------------------------------- | ---------------------------------- | -------- |
+| Marstek x Daily Discharging in kWh | marstek_x_daily_discharging_in_kwh | daily    |
+| Marstek x Daily Charging in kWh    | marstek_x_daily_charging_in_kwh    | daily    |
 
 ## Overall Sensors
+
 Overall sensiors are consolidating the three seperate Marsteks. Beware that this is not just a simple add. Values are  
 calculated.
-  
+
 ### Sensors
-| Name                                | id                                    | type                | data           |
-|-------------------------------------|---------------------------------------|---------------------|----------------|
-| Marstek Discharging in kWh          | marstek_discharging_in_kwh            | unint               | kWh            |
-| Marstek Charging in kWh             | marstek_charging_in_kwh               | unint               | kWh            |
-  
+
+| Name                       | id                         | type  | data |
+| -------------------------- | -------------------------- | ----- | ---- |
+| Marstek Discharging in kWh | marstek_discharging_in_kwh | unint | kWh  |
+| Marstek Charging in kWh    | marstek_charging_in_kwh    | unint | kWh  |
+
 ### Template Sensors
-| Name                                                    | id                                           | value     |
-|---------------------------------------------------------|----------------------------------------------|-----------|
-| Marstek Charging in W                                   | marstek_charging_in_w                        | W         |
-| Marstek Discharging in W                                | marstek_discharging_in_w                     | W         |
-| Marstek Batteries Energy                                | marstek_batteries_energy                     | Wh        |
-| Marstek Batteries Charge                                | marstek_batteries_charge                     | Wh        |
-| Marstek Batteries SOC                                   | marstek_batteries_soc                        | %         |
-  
+
+| Name                     | id                       | value |
+| ------------------------ | ------------------------ | ----- |
+| Marstek Charging in W    | marstek_charging_in_w    | W     |
+| Marstek Discharging in W | marstek_discharging_in_w | W     |
+| Marstek Batteries Energy | marstek_batteries_energy | Wh    |
+| Marstek Batteries Charge | marstek_batteries_charge | Wh    |
+| Marstek Batteries SOC    | marstek_batteries_soc    | %     |
+
 ### Utility meters
-| Name                                                    | id                                           | Interval  |
-|---------------------------------------------------------|----------------------------------------------|-----------|
-| Marstek Daily Discharging in kWh                        | marstek_daily_discharging_in_kwh             | daily     |
-| Marstek Daily Charging in kWh                           | marstek_daily_charging_in_kwh                | daily     |
+
+| Name                             | id                               | Interval |
+| -------------------------------- | -------------------------------- | -------- |
+| Marstek Daily Discharging in kWh | marstek_daily_discharging_in_kwh | daily    |
+| Marstek Daily Charging in kWh    | marstek_daily_charging_in_kwh    | daily    |
+
+# Disclaimer
+Usage of this integration is on your own risk. There is no support.

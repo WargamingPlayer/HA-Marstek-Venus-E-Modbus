@@ -1,9 +1,12 @@
-# ----------------------
-# Version: 2025.9.1
+# ----------------------------------------------------------------
+# Version: 2025.11.1
 # Note: Only for Marstek EMS 153 or higher
 # By: WargamingPlayer
 # Fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
-# ----------------------
+# ----------------------------------------------------------------
+# Scheduler Edition.
+# Use this file for the third Marstek Venus.
+# ----------------------------------------------------------------
 
 # ------
 # MODBUS
@@ -90,7 +93,7 @@ modbus:
       #  input_type: holding
       #  data_type: custom
       #  count: 6
-      #  structure: ">12s"    
+      #  structure: ">12s"
 
       # 30399 = 31102 (in hex)
       # 30400 = 31100 (in hex)
@@ -704,11 +707,72 @@ modbus:
         # Set to 2 = Set to AI mode, after set reverts to 1, still determining what register changes in AI mode
 
       # 43100-43129 are a set of registes accordint to the following
-      # uint16: Weekday, bitmask, high byte = 0, low byte = weekday, bit 0 = monday, bit 7 = sunday.  value 00000001 = monday, 00001001 = monday and thursday, 01100000 = saturday and sunday
-      # uint16: Start. Value = 2359 = 23:59, 2101 = 21:01
-      # uint16: Stop (see start)
-      # int16:  value - is charge, value + is discharge. Range = -2500 to +2500, keep in mind if discharge mode > 800
-      # uint16: 0 = disable, 0 = enable
+      # 2 uint16: Weekday, bitmask, high byte = 0, low byte = weekday, bit 0 = monday, bit 7 = sunday.  value 00000001 = monday, 00001001 = monday and thursday, 01100000 = saturday and sunday
+      # 4 uint16: Start. Value = 2359 = 23:59, 2101 = 21:01
+      # 6 uint16: Stop (see start)
+      # 8 int16:  value - is charge, value + is discharge. Range = -2500 to +2500, keep in mind if discharge mode > 800
+      # 10 uint16: 0 = disable, 0 = enable
+
+      - name: "Marstek 3 Manual Schedule 1"
+        unique_id: marstek_3_manual_schedule_1
+        address: 43100
+        slave: 1
+        scan_interval: 30
+        input_type: holding
+        data_type: custom
+        count: 5
+        structure: ">HHHhH"
+
+      - name: "Marstek 3 Manual Schedule 2"
+        unique_id: marstek_3_manual_schedule_2
+        address: 43105
+        slave: 1
+        scan_interval: 30
+        input_type: holding
+        data_type: custom
+        count: 5
+        structure: ">HHHhH"
+
+      - name: "Marstek 3 Manual Schedule 3"
+        unique_id: marstek_3_manual_schedule_3
+        address: 43110
+        slave: 1
+        scan_interval: 30
+        input_type: holding
+        data_type: custom
+        count: 5
+        structure: ">HHHhH"
+
+      - name: "Marstek 3 Manual Schedule 4"
+        unique_id: marstek_3_manual_schedule_4
+        address: 43115
+        slave: 1
+        scan_interval: 30
+        input_type: holding
+        data_type: custom
+        count: 5
+        structure: ">HHHhH"
+
+      - name: "Marstek 3 Manual Schedule 5"
+        unique_id: marstek_3_manual_schedule_5
+        address: 43120
+        slave: 1
+        scan_interval: 30
+        input_type: holding
+        data_type: custom
+        count: 5
+        structure: ">HHHhH"
+
+      - name: "Marstek 3 Manual Schedule 6"
+        unique_id: marstek_3_manual_schedule_6
+        address: 43125
+        slave: 1
+        scan_interval: 30
+        input_type: holding
+        data_type: custom
+        count: 5
+        structure: ">HHHhH"
+
       - name: "Marstek 3 Capacity and Power registers"
         unique_id: marstek_3_capacity_and_power_registers
         address: 44000
@@ -848,6 +912,60 @@ input_number:
     unit_of_measurement: "%"
     mode: box
 
+  marstek_3_manual_schedule_1_power:
+    name: Marstek 3 Manual Schedule 1 Power
+    min: -2500
+    max: 2500
+    step: 10
+    unit_of_measurement: W
+    mode: slider
+    icon: mdi:power-plug-battery-outline
+
+  marstek_3_manual_schedule_2_power:
+    name: Marstek 3 Manual Schedule 2 Power
+    min: -2500
+    max: 2500
+    step: 10
+    unit_of_measurement: W
+    mode: slider
+    icon: mdi:power-plug-battery-outline
+
+  marstek_3_manual_schedule_3_power:
+    name: Marstek 3 Manual Schedule 3 Power
+    min: -2500
+    max: 2500
+    step: 10
+    unit_of_measurement: W
+    mode: slider
+    icon: mdi:power-plug-battery-outline
+
+  marstek_3_manual_schedule_4_power:
+    name: Marstek 3 Manual Schedule 4 Power
+    min: -2500
+    max: 2500
+    step: 10
+    unit_of_measurement: W
+    mode: slider
+    icon: mdi:power-plug-battery-outline
+
+  marstek_3_manual_schedule_5_power:
+    name: Marstek 3 Manual Schedule 5 Power
+    min: -2500
+    max: 2500
+    step: 10
+    unit_of_measurement: W
+    mode: slider
+    icon: mdi:power-plug-battery-outline
+
+  marstek_3_manual_schedule_6_power:
+    name: Marstek 3 Manual Schedule 6 Power
+    min: -2500
+    max: 2500
+    step: 10
+    unit_of_measurement: W
+    mode: slider
+    icon: mdi:power-plug-battery-outline
+
 # ------------
 # INPUT SELECT
 # ------------
@@ -858,6 +976,301 @@ input_select:
       - "Manual"
       - "Anti-Feed"
       - "Trade"
+
+# ------------
+# INPUT BUTTON
+# ------------
+input_button:
+  marstek_3_manual_schedule_1_set:
+    name: Marstek 3 Schedule 1 set
+    icon: mdi:account-switch-outline
+  marstek_3_manual_schedule_2_set:
+    name: Marstek 3 Schedule 2 set
+    icon: mdi:account-switch-outline
+  marstek_3_manual_schedule_3_set:
+    name: Marstek 3 Schedule 3 set
+    icon: mdi:account-switch-outline
+  marstek_3_manual_schedule_4_set:
+    name: Marstek 3 Schedule 4 set
+    icon: mdi:account-switch-outline
+  marstek_3_manual_schedule_5_set:
+    name: Marstek 3 Schedule 5 set
+    icon: mdi:account-switch-outline
+  marstek_3_manual_schedule_6_set:
+    name: Marstek 3 Schedule 6 set
+    icon: mdi:account-switch-outline
+
+# -------------
+# INPUT BOOLEAN
+# -------------
+input_boolean:
+  marstek_3_manual_schedule_1_enabled:
+    name: Marstek 3 Manual Schedule 1 Enabled
+    icon: mdi:calendar-check
+
+  marstek_3_manual_schedule_2_enabled:
+    name: Marstek 3 Manual Schedule 2 Enabled
+    icon: mdi:calendar-check
+
+  marstek_3_manual_schedule_3_enabled:
+    name: Marstek 3 Manual Schedule 3 Enabled
+    icon: mdi:calendar-check
+
+  marstek_3_manual_schedule_4_enabled:
+    name: Marstek 3 Manual Schedule 4 Enabled
+    icon: mdi:calendar-check
+
+  marstek_3_manual_schedule_5_enabled:
+    name: Marstek 3 Manual Schedule 5 Enabled
+    icon: mdi:calendar-check
+
+  marstek_3_manual_schedule_6_enabled:
+    name: Marstek 3 Manual Schedule 6 Enabled
+    icon: mdi:calendar-check
+
+  marstek_3_manual_schedule_1_schedule_sunday:
+    name: Marstek 3 Manual Schedule 1 Sunday
+    icon: mdi:alpha-s-box
+
+  marstek_3_manual_schedule_1_schedule_monday:
+    name: Marstek 3 Manual Schedule 1 Monday
+    icon: mdi:alpha-m-box
+
+  marstek_3_manual_schedule_1_schedule_tuesday:
+    name: Marstek 3 Manual Schedule 1 Tuesday
+    icon: mdi:alpha-t-box
+
+  marstek_3_manual_schedule_1_schedule_wednesday:
+    name: Marstek 3 Manual Schedule 1 Wednesday
+    icon: mdi:alpha-w-box
+
+  marstek_3_manual_schedule_1_schedule_thursday:
+    name: Marstek 3 Manual Schedule 1 Thursday
+    icon: mdi:alpha-t-box-outline
+
+  marstek_3_manual_schedule_1_schedule_friday:
+    name: Marstek 3 Manual Schedule 1 Friday
+    icon: mdi:alpha-f-box
+
+  marstek_3_manual_schedule_1_schedule_saturday:
+    name: Marstek 3 Manual Schedule 1 Saturday
+    icon: mdi:alpha-s-box-outline
+
+  marstek_3_manual_schedule_2_schedule_sunday:
+    name: Marstek 3 Manual Schedule 2 Sunday
+    icon: mdi:alpha-s-box
+
+  marstek_3_manual_schedule_2_schedule_monday:
+    name: Marstek 3 Manual Schedule 2 Monday
+    icon: mdi:alpha-m-box
+
+  marstek_3_manual_schedule_2_schedule_tuesday:
+    name: Marstek 3 Manual Schedule 2 Tuesday
+    icon: mdi:alpha-t-box
+
+  marstek_3_manual_schedule_2_schedule_wednesday:
+    name: Marstek 3 Manual Schedule 2 Wednesday
+    icon: mdi:alpha-w-box
+
+  marstek_3_manual_schedule_2_schedule_thursday:
+    name: Marstek 3 Manual Schedule 2 Thursday
+    icon: mdi:alpha-t-box-outline
+
+  marstek_3_manual_schedule_2_schedule_friday:
+    name: Marstek 3 Manual Schedule 2 Friday
+    icon: mdi:alpha-f-box
+
+  marstek_3_manual_schedule_2_schedule_saturday:
+    name: Marstek 3 Manual Schedule 2 Saturday
+    icon: mdi:alpha-s-box-outline
+
+  marstek_3_manual_schedule_3_schedule_sunday:
+    name: Marstek 3 Manual Schedule 3 Sunday
+    icon: mdi:alpha-s-box
+
+  marstek_3_manual_schedule_3_schedule_monday:
+    name: Marstek 3 Manual Schedule 3 Monday
+    icon: mdi:alpha-m-box
+
+  marstek_3_manual_schedule_3_schedule_tuesday:
+    name: Marstek 3 Manual Schedule 3 Tuesday
+    icon: mdi:alpha-t-box
+
+  marstek_3_manual_schedule_3_schedule_wednesday:
+    name: Marstek 3 Manual Schedule 3 Wednesday
+    icon: mdi:alpha-w-box
+
+  marstek_3_manual_schedule_3_schedule_thursday:
+    name: Marstek 3 Manual Schedule 3 Thursday
+    icon: mdi:alpha-t-box-outline
+
+  marstek_3_manual_schedule_3_schedule_friday:
+    name: Marstek 3 Manual Schedule 3 Friday
+    icon: mdi:alpha-f-box
+
+  marstek_3_manual_schedule_3_schedule_saturday:
+    name: Marstek 3 Manual Schedule 3 Saturday
+    icon: mdi:alpha-s-box-outline
+
+  marstek_3_manual_schedule_4_schedule_sunday:
+    name: Marstek 3 Manual Schedule 4 Sunday
+    icon: mdi:alpha-s-box
+
+  marstek_3_manual_schedule_4_schedule_monday:
+    name: Marstek 3 Manual Schedule 4 Monday
+    icon: mdi:alpha-m-box
+
+  marstek_3_manual_schedule_4_schedule_tuesday:
+    name: Marstek 3 Manual Schedule 4 Tuesday
+    icon: mdi:alpha-t-box
+
+  marstek_3_manual_schedule_4_schedule_wednesday:
+    name: Marstek 3 Manual Schedule 4 Wednesday
+    icon: mdi:alpha-w-box
+
+  marstek_3_manual_schedule_4_schedule_thursday:
+    name: Marstek 3 Manual Schedule 4 Thursday
+    icon: mdi:alpha-t-box-outline
+
+  marstek_3_manual_schedule_4_schedule_friday:
+    name: Marstek 3 Manual Schedule 4 Friday
+    icon: mdi:alpha-f-box
+
+  marstek_3_manual_schedule_4_schedule_saturday:
+    name: Marstek 3 Manual Schedule 4 Saturday
+    icon: mdi:alpha-s-box-outline
+
+  marstek_3_manual_schedule_5_schedule_sunday:
+    name: Marstek 3 Manual Schedule 5 Sunday
+    icon: mdi:alpha-s-box
+
+  marstek_3_manual_schedule_5_schedule_monday:
+    name: Marstek 3 Manual Schedule 5 Monday
+    icon: mdi:alpha-m-box
+
+  marstek_3_manual_schedule_5_schedule_tuesday:
+    name: Marstek 3 Manual Schedule 5 Tuesday
+    icon: mdi:alpha-t-box
+
+  marstek_3_manual_schedule_5_schedule_wednesday:
+    name: Marstek 3 Manual Schedule 5 Wednesday
+    icon: mdi:alpha-w-box
+
+  marstek_3_manual_schedule_5_schedule_thursday:
+    name: Marstek 3 Manual Schedule 5 Thursday
+    icon: mdi:alpha-t-box-outline
+
+  marstek_3_manual_schedule_5_schedule_friday:
+    name: Marstek 3 Manual Schedule 5 Friday
+    icon: mdi:alpha-f-box
+
+  marstek_3_manual_schedule_5_schedule_saturday:
+    name: Marstek 3 Manual Schedule 5 Saturday
+    icon: mdi:alpha-s-box-outline
+
+  marstek_3_manual_schedule_6_schedule_sunday:
+    name: Marstek 3 Manual Schedule 6 Sunday
+    icon: mdi:alpha-s-box
+
+  marstek_3_manual_schedule_6_schedule_monday:
+    name: Marstek 3 Manual Schedule 6 Monday
+    icon: mdi:alpha-m-box
+
+  marstek_3_manual_schedule_6_schedule_tuesday:
+    name: Marstek 3 Manual Schedule 6 Tuesday
+    icon: mdi:alpha-t-box
+
+  marstek_3_manual_schedule_6_schedule_wednesday:
+    name: Marstek 3 Manual Schedule 6 Wednesday
+    icon: mdi:alpha-w-box
+
+  marstek_3_manual_schedule_6_schedule_thursday:
+    name: Marstek 3 Manual Schedule 6 Thursday
+    icon: mdi:alpha-t-box-outline
+
+  marstek_3_manual_schedule_6_schedule_friday:
+    name: Marstek 3 Manual Schedule 6 Friday
+    icon: mdi:alpha-f-box
+
+  marstek_3_manual_schedule_6_schedule_saturday:
+    name: Marstek 3 Manual Schedule 6 Saturday
+    icon: mdi:alpha-s-box-outline
+
+# --------------
+# INPUT DATETIME
+# --------------
+input_datetime:
+  marstek_3_manual_schedule_1_schedule_start:
+    name: Marstek 3 Manual Schedule 1 Start time
+    icon: mdi:clock-start
+    has_date: false
+    has_time: true
+
+  marstek_3_manual_schedule_1_schedule_end:
+    name: Marstek 3 Manual Schedule 1 End time
+    icon: mdi:clock-end
+    has_date: false
+    has_time: true
+
+  marstek_3_manual_schedule_2_schedule_start:
+    name: Marstek 3 Manual Schedule 2 Start time
+    icon: mdi:clock-start
+    has_date: false
+    has_time: true
+
+  marstek_3_manual_schedule_2_schedule_end:
+    name: Marstek 3 Manual Schedule 2 End time
+    icon: mdi:clock-end
+    has_date: false
+    has_time: true
+
+  marstek_3_manual_schedule_3_schedule_start:
+    name: Marstek 3 Manual Schedule 3 Start time
+    icon: mdi:clock-start
+    has_date: false
+    has_time: true
+
+  marstek_3_manual_schedule_3_schedule_end:
+    name: Marstek 3 Manual Schedule 3 End time
+    icon: mdi:clock-end
+    has_date: false
+    has_time: true
+
+  marstek_3_manual_schedule_4_schedule_start:
+    name: Marstek 3 Manual Schedule 4 Start time
+    icon: mdi:clock-start
+    has_date: false
+    has_time: true
+
+  marstek_3_manual_schedule_4_schedule_end:
+    name: Marstek 3 Manual Schedule 4 End time
+    icon: mdi:clock-end
+    has_date: false
+    has_time: true
+
+  marstek_3_manual_schedule_5_schedule_start:
+    name: Marstek 3 Manual Schedule 5 Start time
+    icon: mdi:clock-start
+    has_date: false
+    has_time: true
+
+  marstek_3_manual_schedule_5_schedule_end:
+    name: Marstek 3 Manual Schedule 5 End time
+    icon: mdi:clock-end
+    has_date: false
+    has_time: true
+
+  marstek_3_manual_schedule_6_schedule_start:
+    name: Marstek 3 Manual Schedule 6 Start time
+    icon: mdi:clock-start
+    has_date: false
+    has_time: true
+
+  marstek_3_manual_schedule_6_schedule_end:
+    name: Marstek 3 Manual Schedule 6 End time
+    icon: mdi:clock-end
+    has_date: false
+    has_time: true
 
 # -------
 # SCRIPTS
@@ -874,19 +1287,19 @@ script:
             sequence:
               - action: modbus.write_register
                 data:
-                  hub: MarstekVenus1
+                  hub: MarstekVenus3
                   address: 42010
                   slave: 1
                   value: 0
               - action: modbus.write_register
                 data:
-                  hub: MarstekVenus1
+                  hub: MarstekVenus3
                   address: 42020
                   slave: 1
                   value: 0
               - action: modbus.write_register
                 data:
-                  hub: MarstekVenus1
+                  hub: MarstekVenus3
                   address: 42021
                   slave: 1
                   value: 0
@@ -898,13 +1311,13 @@ script:
             sequence:
               - action: modbus.write_register
                 data:
-                  hub: MarstekVenus1
+                  hub: MarstekVenus3
                   address: 42021
                   slave: 1
                   value: "{{states('input_number.marstek_3_discharging_charging_power')|int|abs}}"
               - action: modbus.write_register
                 data:
-                  hub: MarstekVenus1
+                  hub: MarstekVenus3
                   address: 42010
                   slave: 1
                   value: 2
@@ -916,13 +1329,13 @@ script:
             sequence:
               - action: modbus.write_register
                 data:
-                  hub: MarstekVenus1
+                  hub: MarstekVenus3
                   address: 42020
                   slave: 1
                   value: "{{states('input_number.marstek_3_discharging_charging_power')|int|abs}}"
               - action: modbus.write_register
                 data:
-                  hub: MarstekVenus1
+                  hub: MarstekVenus3
                   address: 42010
                   slave: 1
                   value: 1
@@ -930,13 +1343,493 @@ script:
     description: ""
     icon: mdi:battery-charging-40
 
+  # index[0] uint16: Weekday, bitmask, high byte = 0, low byte = weekday, bit 0 = monday, bit 7 = sunday.  value 00000001 = monday, 00001001 = monday and thursday, 01100000 = saturday and sunday
+  # index[1] uint16: Start. Value = 2359 = 23:59, 2101 = 21:01
+  # index[2] uint16: Stop (see start)
+  # index[3] int16:  value - is charge, value + is discharge. Range = -2500 to +2500, keep in mind if discharge mode > 800
+  # index[4] uint16: 0 = disable, 1 = enable
+  marstek_3_read_write_modbus_schedule:
+    fields:
+      marstek_register:
+        description: Register to read or write
+        example: schedule_1
+        default: schedule_1
+      marstek_action:
+        description: Action to perform on register
+        example: read
+        default: read
+    variables:
+      script_action: "{{marstek_action}}"
+      script_version: "marstek_3_manual"
+      modbus_register: "sensor.{{script_version}}_{{marstek_register}}"
+      schedule_end: "{{script_version}}_{{marstek_register}}_schedule_end"
+      schedule_start: "{{script_version}}_{{marstek_register}}_schedule_start"
+      schedule_sunday: "{{script_version}}_{{marstek_register}}_schedule_sunday"
+      schedule_monday: "{{script_version}}_{{marstek_register}}_schedule_monday"
+      schedule_tuesday: "{{script_version}}_{{marstek_register}}_schedule_tuesday"
+      schedule_wednesday: "{{script_version}}_{{marstek_register}}_schedule_wednesday"
+      schedule_thursday: "{{script_version}}_{{marstek_register}}_schedule_thursday"
+      schedule_friday: "{{script_version}}_{{marstek_register}}_schedule_friday"
+      schedule_saturday: "{{script_version}}_{{marstek_register}}_schedule_saturday"
+      schedule_enabled: "{{script_version}}_{{marstek_register}}_enabled"
+      schedule_power: "{{script_version}}_{{marstek_register}}_power"
+      start_register: "{{ 43100 + ((marstek_register.split('_')[1] | int(0) - 1) * 5) }}"
+      register_weekday: "{{start_register | int + 0 | int }}"
+      register_start: "{{start_register | int + 1 | int }}"
+      register_end: "{{start_register | int + 2 | int }}"
+      register_power: "{{start_register | int + 3 | int }}"
+      register_enabled: "{{start_register | int + 4 | int }}"
+    alias: Marstek 3 Read Write Modbus Schedule
+    description: "Reads or Writes Modbus registes to schedule varables"
+    sequence:
+      - choose:
+          conditions:
+            - condition: template
+              value_template: "{{marstek_action=='read'}}"
+          sequence:
+            - action: input_number.set_value
+              data:
+                value: "{{states(modbus_register).split(',')[3] | int(0)}}"
+              target:
+                entity_id: "input_number.{{schedule_power}}"
+            # start time
+            - action: input_datetime.set_datetime
+              data:
+                time: >
+                  {% set hours= (states(modbus_register).split(',')[1] | int / 100 | round(0)) | int %}
+                  {% set minutes= (states(modbus_register).split(',')[1] | int) - (hours * 100) | int %}
+                  {{ ((hours|int * 3600) + (minutes|int * 60) | int)  |timestamp_custom('%H:%M', false) }}
+              target:
+                entity_id: "input_datetime.{{schedule_start}}"
+            # stop time
+            - action: input_datetime.set_datetime
+              data:
+                time: >
+                  {% set hours= (states(modbus_register).split(',')[2] | int / 100 | round(0)) | int %}
+                  {% set minutes= (states(modbus_register).split(',')[2] | int) - (hours * 100) | int %}
+                  {{ ((hours|int * 3600) + (minutes|int * 60) | int)  |timestamp_custom('%H:%M', false) }}
+              target:
+                entity_id: "input_datetime.{{schedule_end}}"
+            # Day monday
+            - if:
+                - condition: template
+                  value_template: "{{(states(modbus_register).split(',')[0] | int | bitwise_and(0x01)) == 0}}"
+                  enabled: true
+              then:
+                - action: input_boolean.turn_off
+                  target:
+                    entity_id: "input_boolean.{{schedule_monday}}"
+              else:
+                - action: input_boolean.turn_on
+                  target:
+                    entity_id: "input_boolean.{{schedule_monday}}"
+            # day tuesday
+            - if:
+                - condition: template
+                  value_template: "{{(states(modbus_register).split(',')[0] | int | bitwise_and(0x02)) == 0}}"
+                  enabled: true
+              then:
+                - action: input_boolean.turn_off
+                  target:
+                    entity_id: "input_boolean.{{schedule_tuesday}}"
+              else:
+                - action: input_boolean.turn_on
+                  target:
+                    entity_id: "input_boolean.{{schedule_tuesday}}"
+            # day wednesday
+            - if:
+                - condition: template
+                  value_template: "{{(states(modbus_register).split(',')[0] | int | bitwise_and(0x04)) == 0}}"
+                  enabled: true
+              then:
+                - action: input_boolean.turn_off
+                  target:
+                    entity_id: "input_boolean.{{schedule_wednesday}}"
+              else:
+                - action: input_boolean.turn_on
+                  target:
+                    entity_id: "input_boolean.{{schedule_wednesday}}"
+            # day thursday
+            - if:
+                - condition: template
+                  value_template: "{{(states(modbus_register).split(',')[0] | int | bitwise_and(0x08)) == 0}}"
+                  enabled: true
+              then:
+                - action: input_boolean.turn_off
+                  target:
+                    entity_id: "input_boolean.{{schedule_thursday}}"
+              else:
+                - action: input_boolean.turn_on
+                  target:
+                    entity_id: "input_boolean.{{schedule_thursday}}"
+            # day friday
+            - if:
+                - condition: template
+                  value_template: "{{(states(modbus_register).split(',')[0] | int | bitwise_and(0x10)) == 0}}"
+                  enabled: true
+              then:
+                - action: input_boolean.turn_off
+                  target:
+                    entity_id: "input_boolean.{{schedule_friday}}"
+              else:
+                - action: input_boolean.turn_on
+                  target:
+                    entity_id: "input_boolean.{{schedule_friday}}"
+            # day saturday
+            - if:
+                - condition: template
+                  value_template: "{{(states(modbus_register).split(',')[0] | int | bitwise_and(0x20)) == 0}}"
+                  enabled: true
+              then:
+                - action: input_boolean.turn_off
+                  target:
+                    entity_id: "input_boolean.{{schedule_saturday}}"
+              else:
+                - action: input_boolean.turn_on
+                  target:
+                    entity_id: "input_boolean.{{schedule_saturday}}"
+            # day sunday
+            - if:
+                - condition: template
+                  value_template: "{{(states(modbus_register).split(',')[0] | int | bitwise_and(0x40)) == 0}}"
+                  enabled: true
+              then:
+                - action: input_boolean.turn_off
+                  target:
+                    entity_id: "input_boolean.{{schedule_sunday}}"
+              else:
+                - action: input_boolean.turn_on
+                  target:
+                    entity_id: "input_boolean.{{schedule_sunday}}"
+            # Enabled
+            - if:
+                - condition: template
+                  value_template: "{{(states(modbus_register).split(',')[4] | int) == 0}}"
+                  enabled: true
+              then:
+                - action: input_boolean.turn_off
+                  target:
+                    entity_id: "input_boolean.{{schedule_enabled}}"
+              else:
+                - action: input_boolean.turn_on
+                  target:
+                    entity_id: "input_boolean.{{schedule_enabled}}"
+      - choose:
+          conditions:
+            - condition: template
+              value_template: "{{marstek_action=='write'}}"
+            - condition: template
+              value_template: "{{ (((states('input_boolean.'+schedule_enabled) == 'on') | int) == ((states(modbus_register).split(',')[4]) | int)) == false }}"
+          sequence:
+            - action: modbus.write_register
+              data:
+                hub: MarstekVenus3
+                address: "{{register_weekday}}"
+                slave: 1
+                value:
+                  "{{ ((((states('input_boolean.' + schedule_monday)=='on') | int) * 0x40) +
+                  (((states('input_boolean.' + schedule_tuesday)=='on') | int) * 0x20) +
+                  (((states('input_boolean.' + schedule_wednesday)=='on') | int) * 0x10) +
+                  (((states('input_boolean.' + schedule_thursday)=='on') | int) * 0x08) +
+                  (((states('input_boolean.' + schedule_friday)=='on') | int) * 0x04) +
+                  (((states('input_boolean.' + schedule_saturday)=='on') | int) * 0x02) +
+                  (((states('input_boolean.' + schedule_sunday)=='on') | int) * 0x01)) | abs }}"
+            - action: modbus.write_register
+              data:
+                hub: MarstekVenus3
+                address: "{{register_start}}"
+                slave: 1
+                value: "{{ states('input_datetime.'+schedule_start).split(':')[0] | int * 100 + states('input_datetime.'+schedule_start).split(':')[1] | int | abs}}"
+            - action: modbus.write_register
+              data:
+                hub: MarstekVenus3
+                address: "{{register_end}}"
+                slave: 1
+                value: "{{ states('input_datetime.'+schedule_end).split(':')[0] | int * 100 + states('input_datetime.'+schedule_end).split(':')[1] | int | abs }}"
+            - action: modbus.write_register
+              data:
+                hub: MarstekVenus3
+                address: "{{register_power}}"
+                slave: 1
+                value: "{{ states('input_number.' + schedule_power) | int | bitwise_and(0xffff) }}"
+            - action: modbus.write_register
+              data:
+                hub: MarstekVenus3
+                address: "{{register_enabled}}"
+                slave: 1
+                value: "{{ (states('input_boolean.'+schedule_enabled) == 'on') | int }}"
+
 # -----------
 # AUTOMATIONS
 # -----------
 automation:
+  - alias: Marstek 3 Sync Modbus with Schedule 1
+    description: Sync Modbus sensor with Schedule 1
+    triggers:
+      - trigger: state
+        entity_id:
+          - sensor.marstek_3_manual_schedule_1
+        id: change_marstek_3_schedule_1_helpers
+      - trigger: state
+        entity_id:
+          - input_button.marstek_3_manual_schedule_1_set
+        #          - input_boolean.marstek_3_manual_schedule_1_enabled
+        #          - input_boolean.marstek_3_manual_schedule_1_schedule_sunday
+        #          - input_boolean.marstek_3_manual_schedule_1_schedule_monday
+        #          - input_boolean.marstek_3_manual_schedule_1_schedule_tuesday
+        #          - input_boolean.marstek_3_manual_schedule_1_schedule_wednesday
+        #          - input_boolean.marstek_3_manual_schedule_1_schedule_thursday
+        #          - input_boolean.marstek_3_manual_schedule_1_schedule_friday
+        #          - input_boolean.marstek_3_manual_schedule_1_schedule_saturday
+        #          - input_datetime.marstek_3_manual_schedule_1_schedule_start
+        #          - input_datetime.marstek_3_manual_schedule_1_schedule_end
+        id: change_marstek_3_schedule_1_modbus
+    conditions: []
+    actions:
+      - choose:
+          - conditions:
+              - condition: trigger
+                id: change_marstek_3_schedule_1_helpers
+            sequence:
+              - sequence:
+                  - action: script.marstek_3_read_write_modbus_schedule
+                    data:
+                      marstek_register: schedule_1
+                      marstek_action: read
+          - conditions:
+              - condition: trigger
+                id: change_marstek_3_schedule_1_modbus
+            sequence:
+              - sequence:
+                  - action: script.marstek_3_read_write_modbus_schedule
+                    data:
+                      marstek_register: schedule_1
+                      marstek_action: write
+    mode: single
+
+  - alias: Marstek 3 Sync Modbus with Schedule 2
+    description: Sync Modbus sensor with Schedule 2
+    triggers:
+      - trigger: state
+        entity_id:
+          - sensor.marstek_3_manual_schedule_2
+        id: change_marstek_3_schedule_2_helpers
+      - trigger: state
+        entity_id:
+          - input_button.marstek_3_manual_schedule_2_set
+        #          - input_boolean.marstek_3_manual_schedule_2_enabled
+        #          - input_boolean.marstek_3_manual_schedule_2_schedule_sunday
+        #          - input_boolean.marstek_3_manual_schedule_2_schedule_monday
+        #          - input_boolean.marstek_3_manual_schedule_2_schedule_tuesday
+        #          - input_boolean.marstek_3_manual_schedule_2_schedule_wednesday
+        #          - input_boolean.marstek_3_manual_schedule_2_schedule_thursday
+        #          - input_boolean.marstek_3_manual_schedule_2_schedule_friday
+        #          - input_boolean.marstek_3_manual_schedule_2_schedule_saturday
+        #          - input_datetime.marstek_3_manual_schedule_2_schedule_start
+        #          - input_datetime.marstek_3_manual_schedule_2_schedule_end
+        id: change_marstek_3_schedule_2_modbus
+    conditions: []
+    actions:
+      - choose:
+          - conditions:
+              - condition: trigger
+                id: change_marstek_3_schedule_2_helpers
+            sequence:
+              - sequence:
+                  - action: script.marstek_3_read_write_modbus_schedule
+                    data:
+                      marstek_register: schedule_2
+                      marstek_action: read
+          - conditions:
+              - condition: trigger
+                id: change_marstek_3_schedule_2_modbus
+            sequence:
+              - sequence:
+                  - action: script.marstek_3_read_write_modbus_schedule
+                    data:
+                      marstek_register: schedule_2
+                      marstek_action: write
+    mode: single
+
+  - alias: Marstek 3 Sync Modbus with Schedule 3
+    description: Sync Modbus sensor with Schedule 3
+    triggers:
+      - trigger: state
+        entity_id:
+          - sensor.marstek_3_manual_schedule_3
+        id: change_marstek_3_schedule_3_helpers
+      - trigger: state
+        entity_id:
+          - input_button.marstek_3_manual_schedule_3_set
+        #          - input_boolean.marstek_3_manual_schedule_3_enabled
+        #          - input_boolean.marstek_3_manual_schedule_3_schedule_sunday
+        #          - input_boolean.marstek_3_manual_schedule_3_schedule_monday
+        #          - input_boolean.marstek_3_manual_schedule_3_schedule_tuesday
+        #          - input_boolean.marstek_3_manual_schedule_3_schedule_wednesday
+        #          - input_boolean.marstek_3_manual_schedule_3_schedule_thursday
+        #          - input_boolean.marstek_3_manual_schedule_3_schedule_friday
+        #          - input_boolean.marstek_3_manual_schedule_3_schedule_saturday
+        #          - input_datetime.marstek_3_manual_schedule_3_schedule_start
+        #          - input_datetime.marstek_3_manual_schedule_3_schedule_end
+        id: change_marstek_3_schedule_3_modbus
+    conditions: []
+    actions:
+      - choose:
+          - conditions:
+              - condition: trigger
+                id: change_marstek_3_schedule_3_helpers
+            sequence:
+              - sequence:
+                  - action: script.marstek_3_read_write_modbus_schedule
+                    data:
+                      marstek_register: schedule_3
+                      marstek_action: read
+          - conditions:
+              - condition: trigger
+                id: change_marstek_3_schedule_3_modbus
+            sequence:
+              - sequence:
+                  - action: script.marstek_3_read_write_modbus_schedule
+                    data:
+                      marstek_register: schedule_3
+                      marstek_action: write
+    mode: single
+
+  - alias: Marstek 3 Sync Modbus with Schedule 4
+    description: Sync Modbus sensor with Schedule 4
+    triggers:
+      - trigger: state
+        entity_id:
+          - sensor.marstek_3_manual_schedule_4
+        id: change_marstek_3_schedule_4_helpers
+      - trigger: state
+        entity_id:
+          - input_button.marstek_3_manual_schedule_4_set
+        #          - input_boolean.marstek_3_manual_schedule_4_enabled
+        #          - input_boolean.marstek_3_manual_schedule_4_schedule_sunday
+        #          - input_boolean.marstek_3_manual_schedule_4_schedule_monday
+        #          - input_boolean.marstek_3_manual_schedule_4_schedule_tuesday
+        #          - input_boolean.marstek_3_manual_schedule_4_schedule_wednesday
+        #          - input_boolean.marstek_3_manual_schedule_4_schedule_thursday
+        #          - input_boolean.marstek_3_manual_schedule_4_schedule_friday
+        #          - input_boolean.marstek_3_manual_schedule_4_schedule_saturday
+        #          - input_datetime.marstek_3_manual_schedule_4_schedule_start
+        #          - input_datetime.marstek_3_manual_schedule_4_schedule_end
+        id: change_marstek_3_schedule_4_modbus
+    conditions: []
+    actions:
+      - choose:
+          - conditions:
+              - condition: trigger
+                id: change_marstek_3_schedule_4_helpers
+            sequence:
+              - sequence:
+                  - action: script.marstek_3_read_write_modbus_schedule
+                    data:
+                      marstek_register: schedule_4
+                      marstek_action: read
+          - conditions:
+              - condition: trigger
+                id: change_marstek_3_schedule_4_modbus
+            sequence:
+              - sequence:
+                  - action: script.marstek_3_read_write_modbus_schedule
+                    data:
+                      marstek_register: schedule_4
+                      marstek_action: write
+    mode: single
+
+  - alias: Marstek 3 Sync Modbus with Schedule 5
+    description: Sync Modbus sensor with Schedule 5
+    triggers:
+      - trigger: state
+        entity_id:
+          - sensor.marstek_3_manual_schedule_5
+        id: change_marstek_3_schedule_5_helpers
+      - trigger: state
+        entity_id:
+          - input_button.marstek_3_manual_schedule_5_set
+        #          - input_boolean.marstek_3_manual_schedule_5_enabled
+        #          - input_boolean.marstek_3_manual_schedule_5_schedule_sunday
+        #          - input_boolean.marstek_3_manual_schedule_5_schedule_monday
+        #          - input_boolean.marstek_3_manual_schedule_5_schedule_tuesday
+        #          - input_boolean.marstek_3_manual_schedule_5_schedule_wednesday
+        #          - input_boolean.marstek_3_manual_schedule_5_schedule_thursday
+        #          - input_boolean.marstek_3_manual_schedule_5_schedule_friday
+        #          - input_boolean.marstek_3_manual_schedule_5_schedule_saturday
+        #          - input_datetime.marstek_3_manual_schedule_5_schedule_start
+        #          - input_datetime.marstek_3_manual_schedule_5_schedule_end
+        id: change_marstek_3_schedule_5_modbus
+    conditions: []
+    actions:
+      - choose:
+          - conditions:
+              - condition: trigger
+                id: change_marstek_3_schedule_5_helpers
+            sequence:
+              - sequence:
+                  - action: script.marstek_3_read_write_modbus_schedule
+                    data:
+                      marstek_register: schedule_5
+                      marstek_action: read
+          - conditions:
+              - condition: trigger
+                id: change_marstek_3_schedule_5_modbus
+            sequence:
+              - sequence:
+                  - action: script.marstek_3_read_write_modbus_schedule
+                    data:
+                      marstek_register: schedule_5
+                      marstek_action: write
+    mode: single
+
+  - alias: Marstek 3 Sync Modbus with Schedule 6
+    description: Sync Modbus sensor with Schedule 6
+    triggers:
+      - trigger: state
+        entity_id:
+          - sensor.marstek_3_manual_schedule_6
+        id: change_marstek_3_schedule_6_helpers
+      - trigger: state
+        entity_id:
+          - input_button.marstek_3_manual_schedule_6_set
+        #          - input_boolean.marstek_3_manual_schedule_6_enabled
+        #          - input_boolean.marstek_3_manual_schedule_6_schedule_sunday
+        #          - input_boolean.marstek_3_manual_schedule_6_schedule_monday
+        #          - input_boolean.marstek_3_manual_schedule_6_schedule_tuesday
+        #          - input_boolean.marstek_3_manual_schedule_6_schedule_wednesday
+        #          - input_boolean.marstek_3_manual_schedule_6_schedule_thursday
+        #          - input_boolean.marstek_3_manual_schedule_6_schedule_friday
+        #          - input_boolean.marstek_3_manual_schedule_6_schedule_saturday
+        #          - input_datetime.marstek_3_manual_schedule_6_schedule_start
+        #          - input_datetime.marstek_3_manual_schedule_6_schedule_end
+        id: change_marstek_3_schedule_6_modbus
+    conditions: []
+    actions:
+      - choose:
+          - conditions:
+              - condition: trigger
+                id: change_marstek_3_schedule_6_helpers
+            sequence:
+              - sequence:
+                  - action: script.marstek_3_read_write_modbus_schedule
+                    data:
+                      marstek_register: schedule_6
+                      marstek_action: read
+          - conditions:
+              - condition: trigger
+                id: change_marstek_3_schedule_6_modbus
+            sequence:
+              - sequence:
+                  - action: script.marstek_3_read_write_modbus_schedule
+                    data:
+                      marstek_register: schedule_6
+                      marstek_action: write
+    mode: single
+
   - id: marstek_3_sync_modbus_and_input_select
     alias: "Marstek 3 Sync Modbus and Input Select"
-    description: "sync modbus sensor with input select "
+    description: "sync modbus sensor with input select"
     mode: single
     triggers:
       - trigger: state
@@ -978,7 +1871,7 @@ automation:
               - action: modbus.write_register
                 metadata: {}
                 data:
-                  hub: MarstekVenus1
+                  hub: MarstekVenus3
                   address: 43000
                   slave: 1
                   value: >
@@ -1030,7 +1923,7 @@ automation:
               - action: modbus.write_register
                 metadata: {}
                 data:
-                  hub: MarstekVenus1
+                  hub: MarstekVenus3
                   slave: 1
                   address: 44002
                   value: "{{ states('input_number.marstek_3_set_max_charging_power') | int | abs }}"
@@ -1070,7 +1963,7 @@ automation:
               - action: modbus.write_register
                 metadata: {}
                 data:
-                  hub: MarstekVenus1
+                  hub: MarstekVenus3
                   slave: 1
                   address: 44003
                   value: "{{ states('input_number.marstek_3_set_max_discharging_power') | int | abs }}"
@@ -1110,7 +2003,7 @@ automation:
               - action: modbus.write_register
                 metadata: {}
                 data:
-                  hub: MarstekVenus1
+                  hub: MarstekVenus3
                   slave: 1
                   address: 44001
                   value: "{{ ((( states('input_number.marstek_3_set_battery_min_soc') | int + 1 ) | float ) * 10 ) | int | abs }}"
@@ -1150,7 +2043,7 @@ automation:
               - action: modbus.write_register
                 metadata: {}
                 data:
-                  hub: MarstekVenus1
+                  hub: MarstekVenus3
                   slave: 1
                   address: 44000
                   value: "{{ ((( states('input_number.marstek_3_set_battery_max_soc') | int ) | float ) * 10 ) | int | abs }}"
@@ -1417,8 +2310,8 @@ template:
           {% set sens2= states('sensor.marstek_3_battery_minimum_cell_voltage') | float(default=0) * 1000 %}
           {{ (sens1 - sens2) | round(0) }}
 
-      # Expiremental
       # Calculation does not add up as it should, Tweakers is not correct on this.
+      # Fixed it, now use sensors from Modbus and made it decimals 2
       - name: "Marstek 3 Efficiency Percentage"
         unique_id: marstek_3_efficiency_percentage
         unit_of_measurement: "%"
@@ -1427,10 +2320,25 @@ template:
           {% set charging = states('sensor.marstek_3_total_charging_energy') | float(0) %}
           {% set discharging = states('sensor.marstek_3_total_discharging_energy') | float(0) %}
           {% if charging > 0 %}
-            {{ ((discharging / charging) * 100) | int }}
+            {{ ((discharging / charging) * 100) | float(0) | round(2) }}
           {% else %}
             0
           {% endif %}
+
+      - name: "Marstek 3 Efficiency Percentage (monthly)"
+        unique_id: marstek_3_efficiency_percentage_monthly
+        unit_of_measurement: "%"
+        state_class: measurement
+        state: >
+          {% set charging = states('sensor.marstek_3_monthly_discharging_energy') | float(0) %}
+          {% set discharging = states('sensor.marstek_3_monthly_discharging_energy') | float(0) %}
+          {% if charging > 0 %}
+            {{ ((discharging / charging) * 100) | float(0) | round(2) }}
+          {% else %}
+            0
+          {% endif %}
+
+          marstek_3_monthly_discharging_energy
 
       - name: "Marstek 3 Battery SOC in Wh"
         unique_id: marstek_3_battery_soc_in_Wh
@@ -1464,14 +2372,14 @@ switch:
         turn_on:
           action: modbus.write_register
           data:
-            hub: MarstekVenus1
+            hub: MarstekVenus3
             unit: 1
             address: 42000
             value: 21930 # Write 0x55AA to enable RS485 control mode
         turn_off:
           action: modbus.write_register
           data:
-            hub: MarstekVenus1
+            hub: MarstekVenus3
             unit: 1
             address: 42000
             value: 21947 # Write 0x55BB to disable RS485 control mode
@@ -1512,3 +2420,4 @@ utility_meter:
     unique_id: marstek_3_daily_charging_in_kwh
     source: sensor.marstek_3_charging_in_kwh
     cycle: daily
+# EOF 2423
