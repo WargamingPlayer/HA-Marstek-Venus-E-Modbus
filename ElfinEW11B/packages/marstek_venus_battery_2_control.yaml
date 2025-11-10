@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------
-# Version: 2025.11.1
+# Version: 2025.11.2
 # Note: Only for Marstek EMS 153 or higher
 # By: WargamingPlayer
 # Fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
@@ -119,6 +119,7 @@ modbus:
       #  input_type: holding
       #  data_type: custom
       #  count: 6
+      #  structure: ">12s"
 
       # 30500
       # 30600
@@ -248,7 +249,7 @@ modbus:
         state_class: measurement
         scale: 0.001
         offset: 0
-        precision: 0
+        precision: 2
 
       - name: "Marstek 2 AC Voltage"
         unique_id: marstek_2_ac_voltage
