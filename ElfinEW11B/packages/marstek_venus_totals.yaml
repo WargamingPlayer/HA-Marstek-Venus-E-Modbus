@@ -1,5 +1,5 @@
 # ----------------------
-# Version: 2025.11.2
+# Version: 2025.11.3
 # Note: Only for Marstek EMS 153 or higher
 # By: WargamingPlayer
 # Fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
@@ -109,8 +109,7 @@ template:
           {%- if has_value('sensor.marstek_batteries_charge') %}
             {%- set charge= states('sensor.marstek_batteries_charge') | float(default=0) %}
           {%- endif %}
-          {{ ((charge / totalcap ) | float(default=0) * 100) | round(1) }}  
-
+          {{ ((charge / totalcap ) | float(default=0) * 100) | round(1) }}
 
   - sensor:
       # Expiremental
@@ -134,14 +133,45 @@ template:
             {%- set charging2 = states('sensor.marstek_2_total_charging_energy') | float(default=0) %}
             {%- set discharging2 = states('sensor.marstek_2_total_discharging_energy') | float(default=0) %}
           {%- endif %}
-          {%- if has_value('sensor.marstek_2_total_charging_energy') %}
-            {%- set charging3 = states('sensor.marstek_1_total_charging_energy') | float(default=0) %}
-            {%- set discharging3 = states('sensor.marstek_1_total_discharging_energy') | float(default=0) %}
+          {%- if has_value('sensor.marstek_3_total_charging_energy') %}
+            {%- set charging3 = states('sensor.marstek_3_total_charging_energy') | float(default=0) %}
+            {%- set discharging3 = states('sensor.marstek_3_total_discharging_energy') | float(default=0) %}
           {%- endif %}
           {% set charging = charging1 + charging2 + charging3 | float(default=0) %}
           {% set discharging = discharging1 + discharging2 + discharging3 | float(default=0) %}
           {% if charging > 0 %}
-            {{ ((discharging / charging) * 100) | int }}
+            {{ ((discharging / charging) * 100)  | float(0) | round(2) }}
+          {% else %}
+            0
+          {% endif %}
+
+      - name: "Marstek Efficiency Percentage (monthly)"
+        unique_id: marstek_efficiency_percentage_monthly
+        unit_of_measurement: "%"
+        state_class: measurement
+        state: >
+          {%- set charging1 = 0 | float(default=0) %}
+          {%- set charging2 = 0 | float(default=0) %}
+          {%- set charging3 = 0 | float(default=0) %}
+          {%- set discharging1 = 0 | float(default=0) %}
+          {%- set discharging2 = 0 | float(default=0) %}
+          {%- set discharging3 = 0 | float(default=0) %}
+          {%- if has_value('sensor.marstek_1_monthly_charging_energy') %}
+            {%- set charging1 = states('sensor.marstek_1_monthly_charging_energy') | float(default=0) %}
+            {%- set discharging1 = states('sensor.marstek_1_monthly_discharging_energy') | float(default=0) %}
+          {%- endif %}
+          {%- if has_value('sensor.marstek_2_monthly_charging_energy') %}
+            {%- set charging2 = states('sensor.marstek_2_monthly_charging_energy') | float(default=0) %}
+            {%- set discharging2 = states('sensor.marstek_2_monthly_discharging_energy') | float(default=0) %}
+          {%- endif %}
+          {%- if has_value('sensor.marstek_3_monthly_charging_energy') %}
+            {%- set charging3 = states('sensor.marstek_3_monthly_charging_energy') | float(default=0) %}
+            {%- set discharging3 = states('sensor.marstek_3_monthly_discharging_energy') | float(default=0) %}
+          {%- endif %}
+          {% set charging = charging1 + charging2 + charging3 | float(default=0) %}
+          {% set discharging = discharging1 + discharging2 + discharging3 | float(default=0) %}
+          {% if charging > 0 %}
+            {{ ((discharging / charging) * 100)  | float(0) | round(2) }}
           {% else %}
             0
           {% endif %}
@@ -182,3 +212,4 @@ utility_meter:
     unique_id: marstek_daily_charging_in_kwh
     source: sensor.marstek_charging_in_kwh
     cycle: daily
+#215

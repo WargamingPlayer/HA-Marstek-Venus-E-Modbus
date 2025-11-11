@@ -3,6 +3,11 @@
 Home Assistant Modbus Interface for Marstek Venus E
 
 ## Version information
+### Version 2025.11.3
+Fixed Montly RTE, Fixed Total RTE over Multiple Marsteks, Added Monthly RTE over multiple Marsteks.  
+
+### Version 2025.11.2
+Fixed bugs in code from Incidents on Github.
 
 ### Version 2025.11.1
 

@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------
-# Version: 2025.11.2
+# Version: 2025.11.3
 # Note: Only for Marstek EMS 153 or higher
 # By: WargamingPlayer
 # Fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
@@ -405,7 +405,7 @@ modbus:
         offset: 0
         precision: 2
 
-      - name: "Marstek 2 monthly Charging Energy"
+      - name: "Marstek 2 Monthly Charging Energy"
         unique_id: marstek_2_monthly_charging_energy
         address: 33008
         slave: 1
@@ -2331,15 +2331,13 @@ template:
         unit_of_measurement: "%"
         state_class: measurement
         state: >
-          {% set charging = states('sensor.marstek_2_monthly_discharging_energy') | float(0) %}
+          {% set charging = states('sensor.marstek_2_monthly_charging_energy') | float(0) %}
           {% set discharging = states('sensor.marstek_2_monthly_discharging_energy') | float(0) %}
           {% if charging > 0 %}
             {{ ((discharging / charging) * 100) | float(0) | round(2) }}
           {% else %}
             0
           {% endif %}
-
-          marstek_2_monthly_discharging_energy
 
       - name: "Marstek 2 Battery SOC in Wh"
         unique_id: marstek_2_battery_soc_in_Wh
@@ -2421,4 +2419,4 @@ utility_meter:
     unique_id: marstek_2_daily_charging_in_kwh
     source: sensor.marstek_2_charging_in_kwh
     cycle: daily
-# EOF 2423
+# EOF 2422
