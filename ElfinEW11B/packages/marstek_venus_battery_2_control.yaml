@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------
-# Version: 2025.11.3
+# Version: 2025.12.1
 # Note: Only for Marstek EMS 153 or higher
 # By: WargamingPlayer
 # Fork of https://github.com/Superduper1969/MarstekVenus-ElfinEW11
@@ -405,7 +405,7 @@ modbus:
         offset: 0
         precision: 2
 
-      - name: "Marstek 2 Monthly Charging Energy"
+      - name: "Marstek 2 monthly Charging Energy"
         unique_id: marstek_2_monthly_charging_energy
         address: 33008
         slave: 1
@@ -2356,32 +2356,54 @@ template:
           {% set currentbat= (currentsoc | float(default=0) * (maxbat / 100 )) | int %}
           {{ currentbat }}
 
+  - switch:
+      - unique_id: marstek_2_rs485_control_mode_switch
+        turn_on:
+          - action: modbus.write_register
+            data:
+              hub: MarstekVenus2
+              unit: 1
+              address: 42000
+              value: 21930
+        turn_off:
+          - action: modbus.write_register
+            data:
+              hub: MarstekVenus2
+              unit: 1
+              address: 42000
+              value: 21947
+        # default_entity_id: switch.marstek_2_rs485_control_mode_switch
+        name: Marstek 2 RS485 Control Mode Switch
+        state:
+          "{% set mode = states('sensor.marstek_2_rs485_control_mode') | int %}
+          {{ mode == 21930 }}  # True (ON) when Enabled (21930), False (OFF) otherwise"
+
 #---------
 # SWITCHES
 #---------
-switch:
-  - platform: template
-    switches:
-      marstek_2_rs485_control_mode_switch:
-        friendly_name: "Marstek 2 RS485 Control Mode Switch"
-        unique_id: marstek_2_rs485_control_mode_switch
-        value_template: >
-          {% set mode = states('sensor.marstek_2_rs485_control_mode') | int %}
-          {{ mode == 21930 }}  # True (ON) when Enabled (21930), False (OFF) otherwise
-        turn_on:
-          action: modbus.write_register
-          data:
-            hub: MarstekVenus2
-            unit: 1
-            address: 42000
-            value: 21930 # Write 0x55AA to enable RS485 control mode
-        turn_off:
-          action: modbus.write_register
-          data:
-            hub: MarstekVenus2
-            unit: 1
-            address: 42000
-            value: 21947 # Write 0x55BB to disable RS485 control mode
+#switch:
+#  - platform: template
+#    switches:
+#      marstek_2_rs485_control_mode_switch:
+#        friendly_name: "Marstek 2 RS485 Control Mode Switch"
+#        unique_id: marstek_2_rs485_control_mode_switch
+#        value_template: >
+#          {% set mode = states('sensor.marstek_2_rs485_control_mode') | int %}
+#          {{ mode == 21930 }}  # True (ON) when Enabled (21930), False (OFF) otherwise
+#        turn_on:
+#          action: modbus.write_register
+#          data:
+#            hub: MarstekVenus2
+#            unit: 1
+#            address: 42000
+#            value: 21930 # Write 0x55AA to enable RS485 control mode
+#        turn_off:
+#          action: modbus.write_register
+#          data:
+#            hub: MarstekVenus2
+#            unit: 1
+#            address: 42000
+#            value: 21947 # Write 0x55BB to disable RS485 control mode
 
 # -------
 # SENSORS
@@ -2419,4 +2441,4 @@ utility_meter:
     unique_id: marstek_2_daily_charging_in_kwh
     source: sensor.marstek_2_charging_in_kwh
     cycle: daily
-# EOF 2422
+# EOF 2444
